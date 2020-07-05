@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D2AABE324B21A4A00A382E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AABE224B21A4A00A382E5 /* Data.swift */; };
+		3D2AABE424B21A4A00A382E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AABE224B21A4A00A382E5 /* Data.swift */; };
 		3D3F0A6024AFA81200D78FCF /* TownListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A5F24AFA81200D78FCF /* TownListView.swift */; };
 		3D3F0A6124AFA81200D78FCF /* TownListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A5F24AFA81200D78FCF /* TownListView.swift */; };
-		3D3F0A6324AFA82300D78FCF /* TownListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */; };
-		3D3F0A6424AFA82300D78FCF /* TownListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */; };
 		3D63DB5324ADEE87008425E6 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB5224ADEE87008425E6 /* Tests_iOS.swift */; };
 		3D63DB5E24ADEE87008425E6 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB5D24ADEE87008425E6 /* Tests_macOS.swift */; };
 		3D63DB6024ADEE87008425E6 /* MeteoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB3724ADEE85008425E6 /* MeteoApp.swift */; };
@@ -55,8 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D2AABE224B21A4A00A382E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3D3F0A5F24AFA81200D78FCF /* TownListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownListView.swift; sourceTree = "<group>"; };
-		3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownListViewModel.swift; sourceTree = "<group>"; };
 		3D63DB3724ADEE85008425E6 /* MeteoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoApp.swift; sourceTree = "<group>"; };
 		3D63DB3824ADEE85008425E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3D63DB3924ADEE87008425E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -139,9 +139,9 @@
 				3D63DB3724ADEE85008425E6 /* MeteoApp.swift */,
 				3D3F0A5F24AFA81200D78FCF /* TownListView.swift */,
 				3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */,
-				3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */,
 				3D63DB7424AE180F008425E6 /* WebService.swift */,
 				3D63DB7A24AE1F07008425E6 /* Models.swift */,
+				3D2AABE224B21A4A00A382E5 /* Data.swift */,
 				3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */,
 				3D63DB7724AE1C85008425E6 /* PredictionView.swift */,
 				3D63DB3824ADEE85008425E6 /* ContentView.swift */,
@@ -370,8 +370,8 @@
 			files = (
 				3D63DB7524AE180F008425E6 /* WebService.swift in Sources */,
 				3D63DB7E24AE2050008425E6 /* PredictionViewModel.swift in Sources */,
-				3D3F0A6324AFA82300D78FCF /* TownListViewModel.swift in Sources */,
 				3D63DB6224ADEE87008425E6 /* ContentView.swift in Sources */,
+				3D2AABE324B21A4A00A382E5 /* Data.swift in Sources */,
 				3DB5957824B1D844005BDF8F /* FavouriteTownManager.swift in Sources */,
 				3D3F0A6024AFA81200D78FCF /* TownListView.swift in Sources */,
 				3D63DB6024ADEE87008425E6 /* MeteoApp.swift in Sources */,
@@ -387,8 +387,8 @@
 			files = (
 				3D63DB7624AE180F008425E6 /* WebService.swift in Sources */,
 				3D63DB7F24AE2050008425E6 /* PredictionViewModel.swift in Sources */,
-				3D3F0A6424AFA82300D78FCF /* TownListViewModel.swift in Sources */,
 				3D63DB6324ADEE87008425E6 /* ContentView.swift in Sources */,
+				3D2AABE424B21A4A00A382E5 /* Data.swift in Sources */,
 				3DB5957924B1D844005BDF8F /* FavouriteTownManager.swift in Sources */,
 				3D3F0A6124AFA81200D78FCF /* TownListView.swift in Sources */,
 				3D63DB6124ADEE87008425E6 /* MeteoApp.swift in Sources */,

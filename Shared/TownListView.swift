@@ -10,7 +10,6 @@ import SwiftUI
 struct TownListView: View {
     
     @EnvironmentObject var favouriteTownManager: FavouriteTownManager
-    @ObservedObject private var model = TownListViewModel()
     
     @State private var searchText : String = ""
     
@@ -27,7 +26,7 @@ struct TownListView: View {
                         Spacer()
                     }.navigationTitle("Elige un municipio")
                 } else {
-                    List(model.towns!.filter {
+                    List(townData.filter {
                         self.searchText.isEmpty ? true : $0.nombre.lowercased().contains(self.searchText.lowercased())
                     }, id:\.id) { town in
                         Button(action: {
