@@ -44,8 +44,8 @@ struct TownListView: View {
     }
 }
 
-//struct TownListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TownListView()
-//    }
-//}
+struct TownListView_Previews: PreviewProvider {
+    static var previews: some View {
+        TownListView(isSheetOpened: .constant(true)).environmentObject(FavouriteTownManager())
+    }
+}

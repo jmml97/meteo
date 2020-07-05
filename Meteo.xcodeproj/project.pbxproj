@@ -113,6 +113,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D2AABE124B20D6600A382E5 /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Previews;
+			sourceTree = "<group>";
+		};
 		3D63DB3124ADEE85008425E6 = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +200,7 @@
 		3DB5958024B1EA44005BDF8F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3D2AABE124B20D6600A382E5 /* Previews */,
 				3DB5957D24B1E8F4005BDF8F /* key.plist */,
 				3DA6C72424AFE55D008B6857 /* municipios.json */,
 			);
