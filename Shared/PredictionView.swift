@@ -9,34 +9,38 @@ import SwiftUI
 
 struct PredictionView: View {
     
-    @ObservedObject private var model: PredictionViewModel
+    @StateObject var loader = PredictionDataLoader()
     var townID: String
     
-    init(townID: String) {
-        self.townID = townID
-        self.model = PredictionViewModel(townID: townID)
-    }
-    
+    @ViewBuilder
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text(model.predictions?.provincia ?? "Provincia")
-                Text("Elaborado: \(model.predictions?.elaborado ?? "")")
-            }
-            .padding(10)
-            Text("Predicción horaria")
-                .font(.title)
-                .padding(10.0)
-            ScrollView(.horizontal) {
-                HStack(spacing: 20) {
-                    let datosHorarios = Array(zip((model.predictions?.prediccion.dia[0].temperatura)!, (model.predictions?.prediccion.dia[0].estadoCielo)!))
-                    ForEach(datosHorarios, id: \.0.periodo) { dato in
-                        datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
-                    }
+        if loader.predictions != nil {
+            VStack(alignment: .leading) {
+                
+                HStack {
+                    Text(loader.predictions?.provincia ?? "Provincia")
+                    Text("Elaborado: \(loader.predictions?.elaborado ?? "")")
                 }
-            }.padding(.leading, 10.0).navigationTitle(model.predictions?.nombre ?? "Ciudad")
-            Spacer()
+                .padding(10)
+                Text("Predicción horaria")
+                    .font(.title)
+                    .padding(10.0)
+                ScrollView(.horizontal) {
+                    HStack(spacing: 20) {
+                        let datosHorarios = Array(zip((loader.predictions?.prediccion.dia[0].temperatura)!, (loader.predictions?.prediccion.dia[0].estadoCielo)!))
+                        ForEach(datosHorarios, id: \.0.periodo) { dato in
+                            datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
+                        }
+                    }
+                }.padding(.leading, 10.0).navigationTitle(loader.predictions?.nombre ?? "Ciudad")
+                Spacer()
+            }
+        } else {
+            ProgressView("Cargando").onAppear {
+                loader.load(townID)
+            }
         }
+        
     }
 }
 

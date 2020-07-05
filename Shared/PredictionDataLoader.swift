@@ -7,18 +7,11 @@
 
 import Foundation
 
-class PredictionViewModel: ObservableObject {
+class PredictionDataLoader: ObservableObject {
     
-    var townID: String
+    @Published var predictions: AEMETRootElement? = nil
     
-    init(townID: String) {
-        self.townID = townID
-        fetchPrediction()
-    }
-    
-    @Published var predictions: AEMETRootElement?
-    
-    private func fetchPrediction() {
+    func load(_ id: String) {
         
         var keys: NSDictionary?
 
@@ -29,7 +22,7 @@ class PredictionViewModel: ObservableObject {
         if let dict = keys {
             let apiKey = dict["apiKey"] as? String
             
-            let url = URL(string: "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/\(self.townID)/?api_key=\(apiKey!)")!
+            let url = URL(string: "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/\(id)/?api_key=\(apiKey!)")!
             
             WebService().loadDataRequest(url: url) { response in
                 
