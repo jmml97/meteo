@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchBar: UIViewRepresentable {
 
     @Binding var text: String
+    var placeholder: String
 
     class Coordinator: NSObject, UISearchBarDelegate {
 
@@ -31,6 +32,7 @@ struct SearchBar: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
         searchBar.delegate = context.coordinator
+        searchBar.placeholder = placeholder
         searchBar.searchBarStyle = .minimal
         searchBar.autocapitalizationType = .none
         return searchBar

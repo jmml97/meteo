@@ -18,11 +18,11 @@ struct TownListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(text: $searchText)
+                SearchBar(text: $searchText, placeholder: "Búsqueda de municipios")
                 if (searchText.isEmpty) {
                     VStack {
                         Spacer()
-                        Text("Usa el cuadro de búsqueda")
+                        Text("Los resultados de la búsqueda se mostrarán aquí")
                         Spacer()
                     }.navigationTitle("Elige un municipio")
                 } else {
