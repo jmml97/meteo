@@ -31,7 +31,7 @@ class WebService: NSObject {
         }.resume()
     }
     
-    func loadPredictionRequest(url: URL, completion: @escaping ([AEMETPrediction]?) -> ()) {
+    func loadPredictionRequest(url: URL, completion: @escaping (AEMETRootElement?) -> ()) {
         
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
@@ -42,20 +42,32 @@ class WebService: NSObject {
                 return
             }
             
+            // Cosas feas por el encoding usado
+            // FIXME: buscar mejor solución
             let stringData = String(data: data, encoding: String.Encoding.windowsCP1252)
             let data2 = Data(stringData!.utf8)
             
-            let response = try? JSONDecoder().decode([AEMETPrediction].self, from: data2)
-            if let response = response {
-                print("response=response")
+            let decoder = JSONDecoder()
+            do {
+                let response = try decoder.decode(AEMETRoot.self, from: data2)
+                
                 DispatchQueue.main.async {
-                    print("a")
-                    completion(response)
+                    completion(response[0])
                 }
-            } else {
-                print("else")
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch {
+                print("error: ", error)
             }
-                    
                     
         }.resume()
 

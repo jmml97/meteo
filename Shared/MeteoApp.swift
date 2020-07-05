@@ -11,7 +11,7 @@ import SwiftUI
 struct MeteoApp: App {
     var body: some Scene {
         WindowGroup {
-            PredictionView()
+            ContentView().environmentObject(FavouriteTownManager())
         }
     }
 }
