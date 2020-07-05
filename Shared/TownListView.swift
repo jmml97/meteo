@@ -20,16 +20,25 @@ struct TownListView: View {
         NavigationView {
             VStack {
                 SearchBar(text: $searchText)
-                List(model.towns!.filter {
-                    self.searchText.isEmpty ? true : $0.nombre.lowercased().contains(self.searchText.lowercased())
-                }, id:\.id) { town in
-                    Button(action: {
-                        self.favouriteTownManager.favouriteTowns.append(town)
-                        self.isSheetOpened = false
-                    }, label: {
-                        Text(town.nombre)
-                    })
-                }.navigationTitle("Elige un municipio")
+                if (searchText.isEmpty) {
+                    VStack {
+                        Spacer()
+                        Text("Usa el cuadro de búsqueda")
+                        Spacer()
+                    }.navigationTitle("Elige un municipio")
+                } else {
+                    List(model.towns!.filter {
+                        self.searchText.isEmpty ? true : $0.nombre.lowercased().contains(self.searchText.lowercased())
+                    }, id:\.id) { town in
+                        Button(action: {
+                            self.favouriteTownManager.favouriteTowns.append(town)
+                            self.isSheetOpened = false
+                        }, label: {
+                            Text(town.nombre)
+                        })
+                    }.navigationTitle("Elige un municipio")
+                }
+                
             }
         }
     }
