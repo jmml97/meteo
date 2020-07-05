@@ -35,7 +35,9 @@ struct TownListView: View {
                         }, label: {
                             Text(town.nombre)
                         })
-                    }.navigationTitle("Elige un municipio")
+                    }.navigationTitle("Elige un municipio").id(UUID())
+                    // .id(UUID()) para que la lista se regenere más rápido
+                    // ver: https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui
                 }
                 
             }
