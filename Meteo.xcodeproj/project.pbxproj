@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D3F0A6024AFA81200D78FCF /* TownListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A5F24AFA81200D78FCF /* TownListView.swift */; };
+		3D3F0A6124AFA81200D78FCF /* TownListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A5F24AFA81200D78FCF /* TownListView.swift */; };
+		3D3F0A6324AFA82300D78FCF /* TownListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */; };
+		3D3F0A6424AFA82300D78FCF /* TownListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */; };
 		3D63DB5324ADEE87008425E6 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB5224ADEE87008425E6 /* Tests_iOS.swift */; };
 		3D63DB5E24ADEE87008425E6 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB5D24ADEE87008425E6 /* Tests_macOS.swift */; };
 		3D63DB6024ADEE87008425E6 /* MeteoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB3724ADEE85008425E6 /* MeteoApp.swift */; };
@@ -23,6 +27,14 @@
 		3D63DB7C24AE1F07008425E6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7A24AE1F07008425E6 /* Models.swift */; };
 		3D63DB7E24AE2050008425E6 /* PredictionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */; };
 		3D63DB7F24AE2050008425E6 /* PredictionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */; };
+		3DA6C72524AFE55D008B6857 /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 3DA6C72424AFE55D008B6857 /* municipios.json */; };
+		3DA6C72624AFE55D008B6857 /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 3DA6C72424AFE55D008B6857 /* municipios.json */; };
+		3DB5957824B1D844005BDF8F /* FavouriteTownManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB5957724B1D844005BDF8F /* FavouriteTownManager.swift */; };
+		3DB5957924B1D844005BDF8F /* FavouriteTownManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB5957724B1D844005BDF8F /* FavouriteTownManager.swift */; };
+		3DB5957B24B1E2F5005BDF8F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */; };
+		3DB5957C24B1E2F5005BDF8F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */; };
+		3DB5957E24B1E8F4005BDF8F /* key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DB5957D24B1E8F4005BDF8F /* key.plist */; };
+		3DB5957F24B1E8F4005BDF8F /* key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DB5957D24B1E8F4005BDF8F /* key.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D3F0A5F24AFA81200D78FCF /* TownListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownListView.swift; sourceTree = "<group>"; };
+		3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownListViewModel.swift; sourceTree = "<group>"; };
 		3D63DB3724ADEE85008425E6 /* MeteoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoApp.swift; sourceTree = "<group>"; };
 		3D63DB3824ADEE85008425E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3D63DB3924ADEE87008425E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,6 +75,10 @@
 		3D63DB7724AE1C85008425E6 /* PredictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionView.swift; sourceTree = "<group>"; };
 		3D63DB7A24AE1F07008425E6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionViewModel.swift; sourceTree = "<group>"; };
+		3DA6C72424AFE55D008B6857 /* municipios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = municipios.json; sourceTree = "<group>"; };
+		3DB5957724B1D844005BDF8F /* FavouriteTownManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteTownManager.swift; sourceTree = "<group>"; };
+		3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		3DB5957D24B1E8F4005BDF8F /* key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = key.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,12 +128,17 @@
 		3D63DB3624ADEE85008425E6 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3DB5958024B1EA44005BDF8F /* Resources */,
 				3D63DB3724ADEE85008425E6 /* MeteoApp.swift */,
+				3D3F0A5F24AFA81200D78FCF /* TownListView.swift */,
+				3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */,
+				3D3F0A6224AFA82300D78FCF /* TownListViewModel.swift */,
 				3D63DB7424AE180F008425E6 /* WebService.swift */,
 				3D63DB7A24AE1F07008425E6 /* Models.swift */,
 				3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */,
 				3D63DB7724AE1C85008425E6 /* PredictionView.swift */,
 				3D63DB3824ADEE85008425E6 /* ContentView.swift */,
+				3DB5957724B1D844005BDF8F /* FavouriteTownManager.swift */,
 				3D63DB3924ADEE87008425E6 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -165,6 +188,15 @@
 				3D63DB5F24ADEE87008425E6 /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		3DB5958024B1EA44005BDF8F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3DB5957D24B1E8F4005BDF8F /* key.plist */,
+				3DA6C72424AFE55D008B6857 /* municipios.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +324,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D63DB6424ADEE87008425E6 /* Assets.xcassets in Resources */,
+				3DB5957E24B1E8F4005BDF8F /* key.plist in Resources */,
+				3DA6C72524AFE55D008B6857 /* municipios.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +334,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D63DB6524ADEE87008425E6 /* Assets.xcassets in Resources */,
+				3DB5957F24B1E8F4005BDF8F /* key.plist in Resources */,
+				3DA6C72624AFE55D008B6857 /* municipios.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,8 +362,12 @@
 			files = (
 				3D63DB7524AE180F008425E6 /* WebService.swift in Sources */,
 				3D63DB7E24AE2050008425E6 /* PredictionViewModel.swift in Sources */,
+				3D3F0A6324AFA82300D78FCF /* TownListViewModel.swift in Sources */,
 				3D63DB6224ADEE87008425E6 /* ContentView.swift in Sources */,
+				3DB5957824B1D844005BDF8F /* FavouriteTownManager.swift in Sources */,
+				3D3F0A6024AFA81200D78FCF /* TownListView.swift in Sources */,
 				3D63DB6024ADEE87008425E6 /* MeteoApp.swift in Sources */,
+				3DB5957B24B1E2F5005BDF8F /* SearchBar.swift in Sources */,
 				3D63DB7824AE1C85008425E6 /* PredictionView.swift in Sources */,
 				3D63DB7B24AE1F07008425E6 /* Models.swift in Sources */,
 			);
@@ -339,8 +379,12 @@
 			files = (
 				3D63DB7624AE180F008425E6 /* WebService.swift in Sources */,
 				3D63DB7F24AE2050008425E6 /* PredictionViewModel.swift in Sources */,
+				3D3F0A6424AFA82300D78FCF /* TownListViewModel.swift in Sources */,
 				3D63DB6324ADEE87008425E6 /* ContentView.swift in Sources */,
+				3DB5957924B1D844005BDF8F /* FavouriteTownManager.swift in Sources */,
+				3D3F0A6124AFA81200D78FCF /* TownListView.swift in Sources */,
 				3D63DB6124ADEE87008425E6 /* MeteoApp.swift in Sources */,
+				3DB5957C24B1E2F5005BDF8F /* SearchBar.swift in Sources */,
 				3D63DB7924AE1C85008425E6 /* PredictionView.swift in Sources */,
 				3D63DB7C24AE1F07008425E6 /* Models.swift in Sources */,
 			);
@@ -495,6 +539,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FLHCP5C7F2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -517,7 +562,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FLHCP5C7F2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
