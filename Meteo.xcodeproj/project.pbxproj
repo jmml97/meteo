@@ -25,8 +25,8 @@
 		3D63DB7924AE1C85008425E6 /* PredictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7724AE1C85008425E6 /* PredictionView.swift */; };
 		3D63DB7B24AE1F07008425E6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7A24AE1F07008425E6 /* Models.swift */; };
 		3D63DB7C24AE1F07008425E6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7A24AE1F07008425E6 /* Models.swift */; };
-		3D63DB7E24AE2050008425E6 /* PredictionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */; };
-		3D63DB7F24AE2050008425E6 /* PredictionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */; };
+		3D63DB7E24AE2050008425E6 /* PredictionDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7D24AE2050008425E6 /* PredictionDataLoader.swift */; };
+		3D63DB7F24AE2050008425E6 /* PredictionDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB7D24AE2050008425E6 /* PredictionDataLoader.swift */; };
 		3DA6C72524AFE55D008B6857 /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 3DA6C72424AFE55D008B6857 /* municipios.json */; };
 		3DA6C72624AFE55D008B6857 /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 3DA6C72424AFE55D008B6857 /* municipios.json */; };
 		3DB5957824B1D844005BDF8F /* FavouriteTownManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB5957724B1D844005BDF8F /* FavouriteTownManager.swift */; };
@@ -74,7 +74,7 @@
 		3D63DB7424AE180F008425E6 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		3D63DB7724AE1C85008425E6 /* PredictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionView.swift; sourceTree = "<group>"; };
 		3D63DB7A24AE1F07008425E6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionViewModel.swift; sourceTree = "<group>"; };
+		3D63DB7D24AE2050008425E6 /* PredictionDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionDataLoader.swift; sourceTree = "<group>"; };
 		3DA6C72424AFE55D008B6857 /* municipios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = municipios.json; sourceTree = "<group>"; };
 		3DB5957724B1D844005BDF8F /* FavouriteTownManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteTownManager.swift; sourceTree = "<group>"; };
 		3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 				3D63DB7424AE180F008425E6 /* WebService.swift */,
 				3D63DB7A24AE1F07008425E6 /* Models.swift */,
 				3D2AABE224B21A4A00A382E5 /* Data.swift */,
-				3D63DB7D24AE2050008425E6 /* PredictionViewModel.swift */,
+				3D63DB7D24AE2050008425E6 /* PredictionDataLoader.swift */,
 				3D63DB7724AE1C85008425E6 /* PredictionView.swift */,
 				3D63DB3824ADEE85008425E6 /* ContentView.swift */,
 				3DB5957724B1D844005BDF8F /* FavouriteTownManager.swift */,
@@ -369,7 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D63DB7524AE180F008425E6 /* WebService.swift in Sources */,
-				3D63DB7E24AE2050008425E6 /* PredictionViewModel.swift in Sources */,
+				3D63DB7E24AE2050008425E6 /* PredictionDataLoader.swift in Sources */,
 				3D63DB6224ADEE87008425E6 /* ContentView.swift in Sources */,
 				3D2AABE324B21A4A00A382E5 /* Data.swift in Sources */,
 				3DB5957824B1D844005BDF8F /* FavouriteTownManager.swift in Sources */,
@@ -386,7 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D63DB7624AE180F008425E6 /* WebService.swift in Sources */,
-				3D63DB7F24AE2050008425E6 /* PredictionViewModel.swift in Sources */,
+				3D63DB7F24AE2050008425E6 /* PredictionDataLoader.swift in Sources */,
 				3D63DB6324ADEE87008425E6 /* ContentView.swift in Sources */,
 				3D2AABE424B21A4A00A382E5 /* Data.swift in Sources */,
 				3DB5957924B1D844005BDF8F /* FavouriteTownManager.swift in Sources */,
