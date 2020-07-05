@@ -18,17 +18,24 @@ struct PredictionView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text(model.predictions?.provincia ?? "Provincia")
                 Text("Elaborado: \(model.predictions?.elaborado ?? "")")
             }
-            List((model.predictions?.prediccion.dia[0].temperatura)!, id: \.periodo) { temp in
-                HStack {
-                    Text(temp.periodo + "h")
-                    Text(temp.value + " ºC")
+            .padding(10)
+            Text("Predicción horaria")
+                .font(.title)
+                .padding(10.0)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    let datosHorarios = Array(zip((model.predictions?.prediccion.dia[0].temperatura)!, (model.predictions?.prediccion.dia[0].estadoCielo)!))
+                    ForEach(datosHorarios, id: \.0.periodo) { dato in
+                        datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
+                    }
                 }
-            }.navigationTitle(model.predictions?.nombre ?? "Ciudad")
+            }.padding(.leading, 10.0).navigationTitle(model.predictions?.nombre ?? "Ciudad")
+            Spacer()
         }
     }
 }
@@ -38,3 +45,30 @@ struct PredictionView_Previews: PreviewProvider {
         PredictionView(townID: "29701")
     }
 }
+
+struct datoHorarioView: View {
+    
+    let periodo, temp: String
+    let estadoCielo: AEMETDescripcion
+    
+    var body: some View {
+        VStack(spacing: 5) {
+            Text(periodo + "h")
+            switch estadoCielo {
+            case AEMETDescripcion.despejado:
+                Image(systemName: "sun.max")
+            case AEMETDescripcion.cubierto:
+                            Image(systemName: "cloud")
+            case AEMETDescripcion.nuboso:
+                            Image(systemName: "smoke")
+            case AEMETDescripcion.niebla:
+                            Image(systemName: "cloud.fog")
+            default:
+                Image(systemName: "tornado")
+            }
+            Text(temp + "º")
+        }
+    }
+}
+
+
