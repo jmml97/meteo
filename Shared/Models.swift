@@ -48,6 +48,7 @@ enum AEMETDescripcion: String, Codable {
     case cubiertoLluviaEscasa = "Cubierto con lluvia escasa"
     case despejado = "Despejado"
     case nuboso = "Nuboso"
+    case intervalosNubosos = "Intervalos nubosos"
     case muyNuboso = "Muy nuboso"
     case muyNubosoLluviaEscasa = "Muy nuboso con lluvia escasa"
     case niebla = "Niebla"
