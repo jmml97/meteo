@@ -117,8 +117,8 @@ struct DailyPredictionView: View {
         List(predictions.prediccion.dia, id:\.fecha) { d in
             HStack {
                 Text(getFormattedDateFromString(dateString: d.fecha, inFormat: isoDateFormatString, outFormat: "d MMM"))
-                Text("mín: " + String(d.temperatura.maxima))
-                Text("máx: " + String(d.temperatura.minima))
+                Text("mín: " + String(d.temperatura.minima))
+                Text("máx: " + String(d.temperatura.maxima))
             }
         }
     }
