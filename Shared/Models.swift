@@ -55,12 +55,12 @@ struct AEMETHourlyGenericData: Codable {
 
 // ---------------------
 
-// MARK: - AEMETPrediccion
+// MARK: - AEMETDailyPrediction
 struct AEMETDailyPrediction: Codable {
     let dia: [AEMETDailyDayData]
 }
 
-// MARK: - AEMETDia
+// MARK: - AEMETDailyDayData
 struct AEMETDailyDayData: Codable {
     let probPrecipitacion: [AEMETProbPrecipitacion]
     let cotaNieveProv: [AEMETCotaNieveProv]
@@ -161,6 +161,10 @@ struct GenericAEMETResponse: Codable {
 
 // MARK: - Towns
 
-struct AEMETTown: Codable {
+struct AEMETTown: Codable, Hashable {
     let nombre, id: String
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
