@@ -12,9 +12,7 @@ struct TownListView: View {
     @EnvironmentObject var favouriteTownManager: TownStore
     
     @State private var searchText : String = ""
-    
     @Binding var isSheetOpened : Bool
-    @State var selection = Int?.none
     
     #if os(macOS)
     @State var selectedTown = Set<AEMETTown>()
@@ -60,7 +58,7 @@ struct TownListView: View {
                 } else {
                     List(townData.filter {
                         self.searchText.isEmpty ? true : $0.nombre.lowercased().contains(self.searchText.lowercased())
-                    }, id:\.id) { town in
+                    }, id:\.self) { town in
                         Button(action: {
                             self.favouriteTownManager.favouriteTowns.append(town)
                             self.isSheetOpened = false
