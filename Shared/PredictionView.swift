@@ -143,7 +143,20 @@ struct DailyPredictionView_Previews: PreviewProvider {
                     humedadRelativa: AEMETHumedadRelativa(maxima: 30, minima: 10, dato: [AEMETDato(value: 25, hora: 15)]),
                     uvMax: 10,
                     fecha: "2020-07-06T00:00:00"
-                )]),
+                ),
+                AEMETDailyDayData(
+                    probPrecipitacion: [AEMETProbPrecipitacion(value: 50, periodo: "0-24")],
+                    cotaNieveProv: [AEMETCotaNieveProv(value: "700", periodo: "0-24")],
+                    estadoCielo: [AEMETEstadoCielo(value: "", periodo: "0-24", descripcion: .despejado)],
+                    viento: [AEMETDailyWind(direccion: "S", velocidad: 20, periodo: "0-24")],
+                    rachaMax: [AEMETCotaNieveProv(value: "39", periodo: "0-24")],
+                    temperatura: AEMETHumedadRelativa(maxima: 34, minima: 16, dato: [AEMETDato(value: 25, hora: 15)]),
+                    sensTermica: AEMETHumedadRelativa(maxima: 30, minima: 10, dato: [AEMETDato(value: 25, hora: 15)]),
+                    humedadRelativa: AEMETHumedadRelativa(maxima: 30, minima: 10, dato: [AEMETDato(value: 25, hora: 15)]),
+                    uvMax: 10,
+                    fecha: "2020-07-07T00:00:00"
+                )
+                ]),
                 id: 1,
                 version: 1,
                 origen: AEMETSource(productor: "AEMET",
