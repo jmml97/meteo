@@ -14,12 +14,12 @@ struct PredictionView: View {
     
     @ViewBuilder
     var body: some View {
-        if loader.predictions != nil {
+        if let predictions = loader.predictions {
             VStack(alignment: .leading) {
                 
                 HStack {
-                    Text(loader.predictions?.provincia ?? "Provincia")
-                    Text("Elaborado: \(loader.predictions?.elaborado ?? "")")
+                    Text(predictions.provincia)
+                    Text("Elaborado: \(predictions.elaborado)")
                 }
                 .padding(10)
                 Text("Predicción horaria")
@@ -27,12 +27,12 @@ struct PredictionView: View {
                     .padding(10.0)
                 ScrollView(.horizontal) {
                     HStack(spacing: 20) {
-                        let datosHorarios = Array(zip((loader.predictions?.prediccion.dia[0].temperatura)!, (loader.predictions?.prediccion.dia[0].estadoCielo)!))
+                        let datosHorarios = Array(zip((predictions.prediccion.dia[0].temperatura), (predictions.prediccion.dia[0].estadoCielo)))
                         ForEach(datosHorarios, id: \.0.periodo) { dato in
                             datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
                         }
                     }
-                }.padding(.leading, 10.0).navigationTitle(loader.predictions?.nombre ?? "Ciudad")
+                }.padding(.leading, 10.0).navigationTitle(predictions.nombre)
                 Spacer()
             }
         } else {
