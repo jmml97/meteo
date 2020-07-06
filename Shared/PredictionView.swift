@@ -39,7 +39,6 @@ struct PredictionView: View {
     var body: some View {
         if let predictions = loader.predictions {
             VStack(alignment: .leading) {
-                
                 HStack {
                     Text(predictions.provincia)
                     Text("Elaborado: \(getFormattedDateFromString(dateString: predictions.elaborado, inFormat: isoDateFormatString, outFormat: "MM/dd/yyyy HH:mm"))")
@@ -48,22 +47,7 @@ struct PredictionView: View {
                 Text("Predicción horaria")
                     .font(.title)
                     .padding(10.0)
-                ScrollView(.horizontal) {
-                    HStack(spacing: 20) {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Hora")
-                            Text("Cielo")
-                            Text("Temperatura")
-                        }
-                        ForEach(predictions.prediccion.dia, id:\.fecha) { d in
-                            Text(getFormattedDateFromString(dateString: d.fecha, inFormat: isoDateFormatString, outFormat: "d MMM"))
-                            let datosHorarios = Array(zip(d.temperatura, d.estadoCielo))
-                            ForEach(datosHorarios, id:\.0.periodo) { dato in
-                                datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
-                            }
-                        }
-                    }
-                }.padding(.leading, 10.0).navigationTitle(predictions.nombre)
+                HourlyPredictionView(predictions: predictions).navigationTitle(predictions.nombre)
                 Spacer()
             }
         } else {
@@ -75,13 +59,31 @@ struct PredictionView: View {
     }
 }
 
-struct PredictionView_Previews: PreviewProvider {
-    static var previews: some View {
-        PredictionView(townID: "29701")
+struct HourlyPredictionView: View {
+    
+    let predictions: AEMETRootElement
+    
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Hora")
+                    Text("Cielo")
+                    Text("Temperatura")
+                }
+                ForEach(predictions.prediccion.dia, id:\.fecha) { d in
+                    Text(getFormattedDateFromString(dateString: d.fecha, inFormat: isoDateFormatString, outFormat: "d MMM"))
+                    let datosHorarios = Array(zip(d.temperatura, d.estadoCielo))
+                    ForEach(datosHorarios, id:\.0.periodo) { dato in
+                        HourlyDataView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
+                    }
+                }
+            }
+        }.padding(.leading, 10.0)
     }
 }
 
-struct datoHorarioView: View {
+struct HourlyDataView: View {
     
     let periodo, temp: String
     let estadoCielo: AEMETDescripcion
