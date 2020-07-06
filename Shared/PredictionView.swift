@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+let weatherIcons: [AEMETDescripcion: String] = [
+    .despejado: "sun.max",
+    .cubierto: "cloud",
+    .nuboso: "smoke",
+    .niebla: "cloud.fog",
+]
+
 struct PredictionView: View {
     
     @StateObject var loader = PredictionDataLoader()
@@ -66,18 +73,7 @@ struct datoHorarioView: View {
     var body: some View {
         VStack(spacing: 5) {
             Text(periodo + "h")
-            switch estadoCielo {
-            case AEMETDescripcion.despejado:
-                Image(systemName: "sun.max")
-            case AEMETDescripcion.cubierto:
-                            Image(systemName: "cloud")
-            case AEMETDescripcion.nuboso:
-                            Image(systemName: "smoke")
-            case AEMETDescripcion.niebla:
-                            Image(systemName: "cloud.fog")
-            default:
-                Image(systemName: "tornado")
-            }
+            Image(systemName: weatherIcons[estadoCielo, default: "tornado"])
             Text(temp + "º")
         }
     }
