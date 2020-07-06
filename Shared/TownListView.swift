@@ -14,8 +14,40 @@ struct TownListView: View {
     @State private var searchText : String = ""
     
     @Binding var isSheetOpened : Bool
+    @State var selection = Int?.none
     
+    #if os(macOS)
+    @State var selectedTown = Set<AEMETTown>()
+    #endif
+    
+    @ViewBuilder
     var body: some View {
+        #if os(macOS)
+        VStack {
+            SearchBar(text: $searchText, placeholder: "Búsqueda de municipios")
+            if (searchText.isEmpty) {
+                VStack {
+                    Spacer()
+                    Text("Los resultados de la búsqueda se mostrarán aquí")
+                    Spacer()
+                }
+            } else {
+                List(townData.filter {
+                    self.searchText.isEmpty ? true : $0.nombre.lowercased().contains(self.searchText.lowercased())
+                }, id:\.self, selection: $selectedTown) { town in
+                    Text(town.nombre)
+                }.id(UUID())
+            }
+            Spacer()
+            Button(action: {
+                self.favouriteTownManager.favouriteTowns.append(contentsOf: selectedTown)
+                self.isSheetOpened = false
+            }, label: {
+                Text("OK")
+            })
+        }.frame(width: 400, height: 300)
+        .padding()
+        #else
         NavigationView {
             VStack {
                 SearchBar(text: $searchText, placeholder: "Búsqueda de municipios")
@@ -42,6 +74,7 @@ struct TownListView: View {
                 
             }
         }
+        #endif
     }
 }
 
