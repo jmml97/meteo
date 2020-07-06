@@ -9,36 +9,22 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var favouriteTownManager: TownStore
-    
     @State var isSheetOpened = false
     
     var body: some View {
         NavigationView  {
-            VStack {
-                List(favouriteTownManager.favouriteTowns, id: \.id) { town in
-                    //Text(town.nombre)
-                    NavigationLink(
-                        destination: PredictionView(townID: town.id),
-                        label: {
-                            Text(town.nombre)
-                        })
-                }.sheet(isPresented: self.$isSheetOpened, onDismiss: {
-                    print("dismiss")
-                }) {
-                    TownListView(isSheetOpened: self.$isSheetOpened).environmentObject(self.favouriteTownManager)
-                }.navigationTitle("Municipios")
-                .navigationBarItems(trailing: Button(action: {
-                    self.isSheetOpened = true
-                }, label: {
-                    HStack {
-                        Image(systemName: "plus")
-                        Text("Añadir")
-                    }
-                }))
-                Spacer()
-                Text("Datos proporcionados por la Agencia Estatal de Meteorología")
-            }
+            #if os(iOS)
+            FavouriteTownListView(isSheetOpened: $isSheetOpened).navigationBarItems(trailing: Button(action: {
+                self.isSheetOpened = true
+            }, label: {
+                HStack {
+                    Image(systemName: "plus")
+                    Text("Añadir")
+                }
+            }))
+            #else
+            FavouriteTownListView(isSheetOpened: $isSheetOpened)
+            #endif
         }
     }
 }
@@ -46,5 +32,41 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environmentObject(TownStore())
+    }
+}
+
+struct FavouriteTownListView: View {
+    
+    @EnvironmentObject var favouriteTownManager: TownStore
+    
+    @Binding var isSheetOpened: Bool
+    
+    var body: some View {
+        VStack {
+            List(favouriteTownManager.favouriteTowns, id: \.id) { town in
+                //Text(town.nombre)
+                NavigationLink(
+                    destination: PredictionView(townID: town.id),
+                    label: {
+                        Text(town.nombre)
+                    })
+            }.sheet(isPresented: self.$isSheetOpened, onDismiss: {
+                print("dismiss")
+            }) {
+                TownListView(isSheetOpened: self.$isSheetOpened).environmentObject(self.favouriteTownManager)
+            }.navigationTitle("Municipios")
+            Spacer()
+            #if os(macOS)
+            Button(action: {
+                self.isSheetOpened.toggle()
+            }) {
+                HStack {
+                    Image(systemName: "plus.circle")
+                    Text("Añadir municipio")
+                }
+            }
+            #endif
+            Text("Datos proporcionados por la Agencia Estatal de Meteorología")
+        }
     }
 }
