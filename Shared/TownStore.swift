@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FavouriteTownManager: ObservableObject {
+class TownStore: ObservableObject {
     
     @Published var favouriteTowns: [AEMETTown] = []
     

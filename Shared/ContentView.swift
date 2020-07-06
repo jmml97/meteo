@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var favouriteTownManager: FavouriteTownManager
+    @EnvironmentObject var favouriteTownManager: TownStore
     
     @State var isSheetOpened = false
     
@@ -45,6 +45,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(FavouriteTownManager())
+        ContentView().environmentObject(TownStore())
     }
 }

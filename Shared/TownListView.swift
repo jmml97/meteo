@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TownListView: View {
     
-    @EnvironmentObject var favouriteTownManager: FavouriteTownManager
+    @EnvironmentObject var favouriteTownManager: TownStore
     
     @State private var searchText : String = ""
     
@@ -47,6 +47,6 @@ struct TownListView: View {
 
 struct TownListView_Previews: PreviewProvider {
     static var previews: some View {
-        TownListView(isSheetOpened: .constant(true)).environmentObject(FavouriteTownManager())
+        TownListView(isSheetOpened: .constant(true)).environmentObject(TownStore())
     }
 }
