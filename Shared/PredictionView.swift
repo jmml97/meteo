@@ -97,4 +97,8 @@ struct HourlyDataView: View {
     }
 }
 
-
+struct PredictionView_Previews: PreviewProvider {
+    static var previews: some View {
+        PredictionView(townID: "29718")
+    }
+}
