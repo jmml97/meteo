@@ -7,34 +7,95 @@
 
 import Foundation
 
-// MARK: - AEMETRootElement
-struct AEMETRootElement: Codable {
+// MARK: - AEMETPredictionContainer
+struct AEMETHourlyPredictionContainer: Codable {
     let elaborado, nombre, provincia: String
-    let prediccion: AEMETPrediccion
+    let prediccion: AEMETHourlyPrediction
     let id, version: String
-    let origen: AEMETOrigen
+    let origen: AEMETSource
 }
 
-// MARK: - AEMETOrigen
-struct AEMETOrigen: Codable {
+// MARK: - AEMETDailyPredictionContainer
+struct AEMETDailyPredictionContainer: Codable {
+    let elaborado, nombre, provincia: String
+    let prediccion: AEMETDailyPrediction
+    let id, version: String
+    let origen: AEMETSource
+}
+
+// MARK: - AEMETSource
+struct AEMETSource: Codable {
     let productor: String
     let web, enlace, notaLegal: URL
     let language, copyright: String
 }
 
+// MARK: - AEMETHourlyPrediction
+// A prediction with hourly values.
+struct AEMETHourlyPrediction: Codable {
+    let dia: [AEMETHourlyDayData]
+}
+
+// MARK: - AEMETHourlyDayData
+// Contais information for a day on the hourly prediction
+struct AEMETHourlyDayData: Codable {
+    let estadoCielo: [AEMETEstadoCielo]
+    let precipitacion, probPrecipitacion, probTormenta, nieve: [AEMETHourlyGenericData]
+    let probNieve, temperatura, sensTermica, humedadRelativa: [AEMETHourlyGenericData]
+    let vientoAndRachaMax: [AEMETWind]
+    let fecha, orto, ocaso: String
+}
+
+// MARK: - AEMETHourlyGenericData
+// A generic contanier value - periodo that stores information of a parameter for a
+// certain period of time
+struct AEMETHourlyGenericData: Codable {
+    let value, periodo: String
+}
+
+// ---------------------
+
 // MARK: - AEMETPrediccion
-struct AEMETPrediccion: Codable {
-    let dia: [AEMETDia]
+struct AEMETDailyPrediction: Codable {
+    let dia: [AEMETDailyDayData]
 }
 
 // MARK: - AEMETDia
-struct AEMETDia: Codable {
+struct AEMETDailyDayData: Codable {
+    let probPrecipitacion: [AEMETProbPrecipitacion]
+    let cotaNieveProv: [AEMETCotaNieveProv]
     let estadoCielo: [AEMETEstadoCielo]
-    let precipitacion, probPrecipitacion, probTormenta, nieve: [AEMETHumedadRelativa]
-    let probNieve, temperatura, sensTermica, humedadRelativa: [AEMETHumedadRelativa]
-    let vientoAndRachaMax: [AEMETVientoAndRachaMax]
-    let fecha, orto, ocaso: String
+    let viento: [AEMETWind]
+    let rachaMax: [AEMETCotaNieveProv]
+    let temperatura, sensTermica, humedadRelativa: AEMETHumedadRelativa
+    let uvMax: Int?
+    let fecha: String
 }
+
+// MARK: - AEMETCotaNieveProv
+struct AEMETCotaNieveProv: Codable {
+    let value: String
+    let periodo: String?
+}
+
+// MARK: - AEMETHumedadRelativa
+struct AEMETHumedadRelativa: Codable {
+    let maxima, minima: Int
+    let dato: [AEMETDato]
+}
+
+// MARK: - AEMETDato
+struct AEMETDato: Codable {
+    let value, hora: Int
+}
+
+// MARK: - AEMETProbPrecipitacion
+struct AEMETProbPrecipitacion: Codable {
+    let value: Int
+    let periodo: String?
+}
+
+// ---------------------
 
 // MARK: - AEMETEstadoCielo
 struct AEMETEstadoCielo: Codable {
@@ -56,13 +117,9 @@ enum AEMETDescripcion: String, Codable {
     case nubesAltas = "Nubes altas"
 }
 
-// MARK: - AEMETHumedadRelativa
-struct AEMETHumedadRelativa: Codable {
-    let value, periodo: String
-}
-
-// MARK: - AEMETVientoAndRachaMax
-struct AEMETVientoAndRachaMax: Codable {
+// MARK: - AEMETWind
+// value: valor de la racha máxima
+struct AEMETWind: Codable {
     let direccion: [AEMETDireccion]?
     let velocidad: [String]?
     let periodo: String
@@ -81,7 +138,7 @@ enum AEMETDireccion: String, Codable {
     case c = "C"
 }
 
-typealias AEMETRoot = [AEMETRootElement]
+typealias AEMETRoot = [AEMETHourlyPredictionContainer]
 
 struct GenericAEMETResponse: Codable {
     
@@ -92,21 +149,6 @@ struct GenericAEMETResponse: Codable {
     
 }
 
-struct AEMETPredictionResponse: Codable, Identifiable {
-
-    let nombre: String?
-    let provincia: String?
-    let elaborado: String?
-    let id: String?
-    
-    init() {
-        nombre = nil
-        provincia = nil
-        elaborado = nil
-        id = nil
-    }
-    
-}
 
 // MARK: - Towns
 

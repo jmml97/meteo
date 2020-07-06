@@ -37,7 +37,7 @@ struct PredictionView: View {
     
     @ViewBuilder
     var body: some View {
-        if let predictions = loader.predictions {
+        if let predictions = loader.hourlyPredictionsContainer {
             VStack(alignment: .leading) {
                 HStack {
                     Text(predictions.provincia)
@@ -61,7 +61,7 @@ struct PredictionView: View {
 
 struct HourlyPredictionView: View {
     
-    let predictions: AEMETRootElement
+    let predictions: AEMETHourlyPredictionContainer
     
     var body: some View {
         ScrollView(.horizontal) {
