@@ -14,14 +14,20 @@ struct ContentView: View {
     var body: some View {
         NavigationView  {
             #if os(iOS)
-            FavouriteTownListView(isSheetOpened: $isSheetOpened).navigationBarItems(trailing: Button(action: {
-                self.isSheetOpened = true
-            }, label: {
-                HStack {
-                    Image(systemName: "plus")
-                    Text("Añadir")
-                }
-            }))
+            FavouriteTownListView(isSheetOpened: $isSheetOpened)
+            .navigationBarItems(
+                trailing: Button(
+                    action: {
+                        self.isSheetOpened = true
+                    },
+                    label: {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Añadir")
+                        }
+                    }
+                )
+            )
             #else
             FavouriteTownListView(isSheetOpened: $isSheetOpened)
             #endif
@@ -44,7 +50,6 @@ struct FavouriteTownListView: View {
     var body: some View {
         VStack {
             List(favouriteTownManager.favouriteTowns, id: \.id) { town in
-                //Text(town.nombre)
                 NavigationLink(
                     destination: PredictionView(townID: town.id),
                     label: {
@@ -64,9 +69,9 @@ struct FavouriteTownListView: View {
                     Image(systemName: "plus.circle")
                     Text("Añadir municipio")
                 }
-            }
+            }.buttonStyle(BorderlessButtonStyle())
             #endif
-            Text("Datos proporcionados por la Agencia Estatal de Meteorología")
+            Text("Datos proporcionados por la Agencia Estatal de Meteorología").padding()
         }
     }
 }
