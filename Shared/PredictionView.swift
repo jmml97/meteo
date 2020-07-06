@@ -37,18 +37,24 @@ struct PredictionView: View {
     
     @ViewBuilder
     var body: some View {
-        if let predictions = loader.hourlyPredictionsContainer {
+        if let hourlyPredictions = loader.hourlyPredictionsContainer {
             VStack(alignment: .leading) {
                 HStack {
-                    Text(predictions.provincia)
-                    Text("Elaborado: \(getFormattedDateFromString(dateString: predictions.elaborado, inFormat: isoDateFormatString, outFormat: "MM/dd/yyyy HH:mm"))")
+                    Text(hourlyPredictions.provincia)
+                    Text("Elaborado: \(getFormattedDateFromString(dateString: hourlyPredictions.elaborado, inFormat: isoDateFormatString, outFormat: "MM/dd/yyyy HH:mm"))")
                 }
                 .padding(10)
                 Text("Predicción horaria")
                     .font(.title)
                     .padding(10.0)
-                HourlyPredictionView(predictions: predictions).navigationTitle(predictions.nombre)
+                HourlyPredictionView(predictions: hourlyPredictions).navigationTitle(hourlyPredictions.nombre)
                 Spacer()
+                if let dailyPredictions = loader.dailyPredictionsContainer {
+                    Text("Predicción diaria")
+                        .font(.title)
+                        .padding(10.0)
+                    DailyPredictionView(predictions: dailyPredictions)
+                }
             }
         } else {
             ProgressView("Cargando").onAppear {
@@ -100,5 +106,20 @@ struct HourlyDataView: View {
 struct PredictionView_Previews: PreviewProvider {
     static var previews: some View {
         PredictionView(townID: "29718")
+    }
+}
+
+struct DailyPredictionView: View {
+    
+    let predictions: AEMETDailyPredictionContainer
+    
+    var body: some View {
+        List(predictions.prediccion.dia, id:\.fecha) { d in
+            HStack {
+                Text(getFormattedDateFromString(dateString: d.fecha, inFormat: isoDateFormatString, outFormat: "d MMM"))
+                Text("mín: " + String(d.temperatura.maxima))
+                Text("máx: " + String(d.temperatura.minima))
+            }
+        }
     }
 }

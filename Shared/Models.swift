@@ -19,7 +19,7 @@ struct AEMETHourlyPredictionContainer: Codable {
 struct AEMETDailyPredictionContainer: Codable {
     let elaborado, nombre, provincia: String
     let prediccion: AEMETDailyPrediction
-    let id, version: String
+    let id, version: Int
     let origen: AEMETSource
 }
 
@@ -65,7 +65,7 @@ struct AEMETDailyDayData: Codable {
     let probPrecipitacion: [AEMETProbPrecipitacion]
     let cotaNieveProv: [AEMETCotaNieveProv]
     let estadoCielo: [AEMETEstadoCielo]
-    let viento: [AEMETWind]
+    let viento: [AEMETDailyWind]
     let rachaMax: [AEMETCotaNieveProv]
     let temperatura, sensTermica, humedadRelativa: AEMETHumedadRelativa
     let uvMax: Int?
@@ -95,11 +95,19 @@ struct AEMETProbPrecipitacion: Codable {
     let periodo: String?
 }
 
+// MARK: - AEMETViento
+struct AEMETDailyWind: Codable {
+    let direccion: String
+    let velocidad: Int
+    let periodo: String?
+}
+
 // ---------------------
 
 // MARK: - AEMETEstadoCielo
 struct AEMETEstadoCielo: Codable {
-    let value, periodo: String
+    let value:String
+    let periodo: String?
     let descripcion: AEMETDescripcion
 }
 
@@ -115,6 +123,7 @@ enum AEMETDescripcion: String, Codable {
     case niebla = "Niebla"
     case pocoNuboso = "Poco nuboso"
     case nubesAltas = "Nubes altas"
+    case error = ""
 }
 
 // MARK: - AEMETWind
