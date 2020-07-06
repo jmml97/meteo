@@ -27,9 +27,17 @@ struct PredictionView: View {
                     .padding(10.0)
                 ScrollView(.horizontal) {
                     HStack(spacing: 20) {
-                        let datosHorarios = Array(zip((predictions.prediccion.dia[0].temperatura), (predictions.prediccion.dia[0].estadoCielo)))
-                        ForEach(datosHorarios, id: \.0.periodo) { dato in
-                            datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
+                        VStack {
+                            Text("Hora")
+                            Text("Cielo")
+                            Text("Temperatura")
+                        }
+                        ForEach(predictions.prediccion.dia, id:\.fecha) { d in
+                            Text(d.fecha)
+                            let datosHorarios = Array(zip(d.temperatura, d.estadoCielo))
+                            ForEach(datosHorarios, id:\.0.periodo) { dato in
+                                datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
+                            }
                         }
                     }
                 }.padding(.leading, 10.0).navigationTitle(predictions.nombre)
