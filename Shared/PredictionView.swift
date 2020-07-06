@@ -14,6 +14,22 @@ let weatherIcons: [AEMETDescripcion: String] = [
     .niebla: "cloud.fog",
 ]
 
+let isoDateFormatString = "yyyy-MM-dd'T'HH:mm:ss"
+
+func getFormattedDateFromString(dateString: String, inFormat: String, outFormat: String) -> String {
+    
+    let inFormatter = DateFormatter()
+    inFormatter.dateFormat = inFormat
+    
+    let date = inFormatter.date(from:dateString)!
+    
+    let outFormatter = DateFormatter()
+    outFormatter.dateFormat = outFormat
+    outFormatter.locale = Locale(identifier: "es_ES")
+    
+    return outFormatter.string(for: date)!
+}
+
 struct PredictionView: View {
     
     @StateObject var loader = PredictionDataLoader()
@@ -26,7 +42,7 @@ struct PredictionView: View {
                 
                 HStack {
                     Text(predictions.provincia)
-                    Text("Elaborado: \(predictions.elaborado)")
+                    Text("Elaborado: \(getFormattedDateFromString(dateString: predictions.elaborado, inFormat: isoDateFormatString, outFormat: "MM/dd/yyyy HH:mm"))")
                 }
                 .padding(10)
                 Text("Predicción horaria")
@@ -34,13 +50,13 @@ struct PredictionView: View {
                     .padding(10.0)
                 ScrollView(.horizontal) {
                     HStack(spacing: 20) {
-                        VStack {
+                        VStack(alignment: .leading, spacing: 10) {
                             Text("Hora")
                             Text("Cielo")
                             Text("Temperatura")
                         }
                         ForEach(predictions.prediccion.dia, id:\.fecha) { d in
-                            Text(d.fecha)
+                            Text(getFormattedDateFromString(dateString: d.fecha, inFormat: isoDateFormatString, outFormat: "d MMM"))
                             let datosHorarios = Array(zip(d.temperatura, d.estadoCielo))
                             ForEach(datosHorarios, id:\.0.periodo) { dato in
                                 datoHorarioView(periodo: dato.0.periodo, temp: dato.0.value, estadoCielo: dato.1.descripcion)
@@ -71,7 +87,7 @@ struct datoHorarioView: View {
     let estadoCielo: AEMETDescripcion
     
     var body: some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 10) {
             Text(periodo + "h")
             Image(systemName: weatherIcons[estadoCielo, default: "tornado"])
             Text(temp + "º")
