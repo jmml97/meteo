@@ -15,19 +15,19 @@ struct ContentView: View {
         NavigationView  {
             #if os(iOS)
             FavouriteTownListView(isSheetOpened: $isSheetOpened)
-            .navigationBarItems(
-                trailing: Button(
-                    action: {
-                        self.isSheetOpened = true
-                    },
-                    label: {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text("Añadir")
+                .navigationBarItems(
+                    trailing: Button(
+                        action: {
+                            self.isSheetOpened = true
+                        },
+                        label: {
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Añadir")
+                            }
                         }
-                    }
+                    )
                 )
-            )
             #else
             FavouriteTownListView(isSheetOpened: $isSheetOpened)
             #endif
@@ -49,12 +49,14 @@ struct FavouriteTownListView: View {
     
     var body: some View {
         VStack {
-            List(favouriteTownManager.favouriteTowns, id: \.id) { town in
-                NavigationLink(
-                    destination: PredictionView(townID: town.id),
-                    label: {
-                        Text(town.name)
-                    })
+            List {
+                ForEach(townStore.favouriteTowns, id: \.id) { town in
+                    NavigationLink(
+                        destination: PredictionView(townID: town.id),
+                        label: {
+                            Text(town.name)
+                        })
+                }.onDelete(perform: townStore.removeFavouriteTown)
             }.sheet(isPresented: self.$isSheetOpened, onDismiss: {
                 print("dismiss")
             }) {
@@ -74,4 +76,5 @@ struct FavouriteTownListView: View {
             Text("Datos proporcionados por la Agencia Estatal de Meteorología").padding()
         }
     }
+    
 }

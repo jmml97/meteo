@@ -92,4 +92,19 @@ class TownStore: ObservableObject {
             fatalError("Could not insert town data into table: \(error)")
         }
     }
+    
+    func removeFavouriteTown(at offsets: IndexSet) {
+        for offset in offsets {
+            let favouriteTownsTable = Table(favouriteTownTableName)
+            let id = Expression<String>("id")
+            
+            let town = favouriteTownsTable.filter(id == favouriteTowns[offset].id)
+            do {
+                try db!.run(town.delete())
+                reloadFavouriteTowns()
+            } catch {
+                fatalError("Could not delete favourite town: \(error)")
+            }
+        }
+    }
 }
