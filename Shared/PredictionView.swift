@@ -72,8 +72,9 @@ struct MetadataView: View {
     
     var body: some View {
         HStack {
-            Text(province)
-            Text("Elaborado: \(getFormattedDateFromString(dateString: predictionDate, inFormat: isoDateFormatString, outFormat: "MM/dd/yyyy HH:mm"))")
+            Text(province).font(Font.system(.body).smallCaps())
+            Divider().frame(height: 20)
+            Text("Elaboración: \(getFormattedDateFromString(dateString: predictionDate, inFormat: isoDateFormatString, outFormat: "MM/dd/yyyy HH:mm"))")
         }
     }
 }
@@ -147,6 +148,7 @@ struct DailyPredictionView: View {
     var body: some View {
         HStack {
             Text(getFormattedDateFromString(dateString: date, inFormat: isoDateFormatString, outFormat: "d MMM"))
+            Divider().frame(height: 20)
             Text("mín: " + String(min))
             Text("máx: " + String(max))
         }
