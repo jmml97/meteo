@@ -11,11 +11,12 @@ import SQLite
 class TownStore: ObservableObject {
     
     @Published var favouriteTowns: [AEMETTown] = []
-    @Published var townData: [AEMETTown] = []
+    //@Published var townData: [AEMETTown] = []
     
     var db: Connection? = nil
     
     let favouriteTownTableName = "favouriteTowns"
+    let townsTableName = "towns"
     
     let dbFilename = "meteo.sqlite3"
     
@@ -49,7 +50,7 @@ class TownStore: ObservableObject {
         }
         
         favouriteTowns = load(dbFilename: dbFilename, dbTableName: favouriteTownTableName)
-        townData = load(dbFilename: dbFilename, dbTableName: "towns")
+        //townData = load(dbFilename: dbFilename, dbTableName: townsTableName)
     }
     
     func load<T: Decodable>(dbFilename: String, dbTableName: String) -> [T] {
@@ -106,5 +107,28 @@ class TownStore: ObservableObject {
                 fatalError("Could not delete favourite town: \(error)")
             }
         }
+    }
+    
+    func getTowns(containingString: String) -> [AEMETTown] {
+        let towns = Table(townsTableName)
+        let name = Expression<String>("name")
+        let id = Expression<String>("id")
+        
+        var returnTowns: [AEMETTown] = []
+        
+        let filteredTowns = towns.filter(name.like("%"+containingString.lowercased()+"%"))
+        
+        do {
+            for t in try db!.prepare(filteredTowns) {
+                returnTowns.append(AEMETTown(name: t[name], id: t[id]))
+            }
+        } catch {
+            fatalError("Could not create array of filtered elements: \(error)")
+        }
+        
+        print(containingString)
+        print(returnTowns)
+        
+        return returnTowns
     }
 }

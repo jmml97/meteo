@@ -30,9 +30,7 @@ struct TownListView: View {
                     Spacer()
                 }
             } else {
-                List(townStore.townData.filter {
-                    self.searchText.isEmpty ? true : $0.name.lowercased().contains(self.searchText.lowercased())
-                }, id:\.self, selection: $selectedTown) { town in
+                List(townStore.getTowns(containingString: searchText), id: \.self, selection: $selectedTown) { town in
                     Text(town.name)
                 }.id(UUID())
             }
@@ -56,9 +54,7 @@ struct TownListView: View {
                         Spacer()
                     }.navigationTitle("Elige un municipio")
                 } else {
-                    List(townStore.townData.filter {
-                        self.searchText.isEmpty ? true : $0.name.lowercased().contains(self.searchText.lowercased())
-                    }, id:\.self) { town in
+                    List(townStore.getTowns(containingString: searchText), id: \.self) { town in
                         Button(action: {
                             self.townStore.addFavouriteTown(town)
                             //self.favouriteTownManager.favouriteTowns.append(town)
@@ -66,7 +62,8 @@ struct TownListView: View {
                         }, label: {
                             Text(town.name)
                         })
-                    }.navigationTitle("Elige un municipio").id(UUID())
+                    }.id(UUID())
+                    .navigationTitle("Elige un municipio").id(UUID())
                     // .id(UUID()) para que la lista se regenere más rápido
                     // ver: https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui
                 }
