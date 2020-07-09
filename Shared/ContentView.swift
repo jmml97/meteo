@@ -43,7 +43,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct FavouriteTownListView: View {
     
-    @EnvironmentObject var favouriteTownManager: TownStore
+    @EnvironmentObject var townStore: TownStore
     
     @Binding var isSheetOpened: Bool
     
@@ -58,7 +58,7 @@ struct FavouriteTownListView: View {
             }.sheet(isPresented: self.$isSheetOpened, onDismiss: {
                 print("dismiss")
             }) {
-                TownListView(isSheetOpened: self.$isSheetOpened).environmentObject(self.favouriteTownManager)
+                TownListView(isSheetOpened: self.$isSheetOpened).environmentObject(self.townStore)
             }.navigationTitle("Municipios")
             Spacer()
             #if os(macOS)
