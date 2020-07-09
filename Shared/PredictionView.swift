@@ -42,7 +42,7 @@ func getFormattedDateFromString(dateString: String, inFormat: String, outFormat:
 /// - Parameter townID: id of the town this view represents, needed to pull data
 struct PredictionView: View {
     
-    @StateObject var loader = PredictionDataLoader()
+    @ObservedObject var loader = PredictionDataLoader()
     var townID: String
     
     @ViewBuilder
