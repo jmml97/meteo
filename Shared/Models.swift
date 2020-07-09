@@ -37,7 +37,7 @@ struct AEMETHourlyPrediction: Codable {
 }
 
 // MARK: - AEMETHourlyDayData
-// Contais information for a day on the hourly prediction
+/// Contais information for a day on the hourly prediction
 struct AEMETHourlyDayData: Codable {
     let estadoCielo: [AEMETEstadoCielo]
     let precipitacion, probPrecipitacion, probTormenta, nieve: [AEMETHourlyGenericData]
@@ -47,8 +47,7 @@ struct AEMETHourlyDayData: Codable {
 }
 
 // MARK: - AEMETHourlyGenericData
-// A generic contanier value - periodo that stores information of a parameter for a
-// certain period of time
+/// A generic contanier `value` - `periodo` that stores information of a parameter for a certain period of time
 struct AEMETHourlyGenericData: Codable {
     let value, periodo: String
 }
@@ -112,22 +111,30 @@ struct AEMETEstadoCielo: Codable {
 }
 
 enum AEMETDescripcion: String, Codable {
-    case bruma = "Bruma"
+    case despejado = "Despejado"
     case cubierto = "Cubierto"
     case cubiertoLluviaEscasa = "Cubierto con lluvia escasa"
-    case despejado = "Despejado"
-    case nuboso = "Nuboso"
+    case pocoNuboso = "Poco nuboso"
     case intervalosNubosos = "Intervalos nubosos"
+    case intervalosNubososLluviaEscasa = "Intervalos nubosos con lluvia escasa"
+    case intervalosNubososLluvia = "Intervalos nubosos con lluvia"
+    case intervalosNubososTormenta = "Intervalos nubosos con tormenta"
+    case nuboso = "Nuboso"
+    case nubosoLluviaEscasa = "Nuboso con lluvia escasa"
+    case nubosoLluvia = "Nuboso con lluvia"
+    case nubosoTormenta = "Nuboso con tormenta"
     case muyNuboso = "Muy nuboso"
     case muyNubosoLluviaEscasa = "Muy nuboso con lluvia escasa"
+    case muyNubosoLluvia = "Muy nuboso con lluvia"
+    case muyNubosoTormenta = "Muy nuboso con tormenta"
     case niebla = "Niebla"
-    case pocoNuboso = "Poco nuboso"
+    case bruma = "Bruma"
     case nubesAltas = "Nubes altas"
     case error = ""
 }
 
 // MARK: - AEMETWind
-// value: valor de la racha máxima
+/// - Parameter value: fastest wind speed
 struct AEMETWind: Codable {
     let direccion: [AEMETDireccion]?
     let velocidad: [String]?
