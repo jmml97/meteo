@@ -36,7 +36,9 @@ struct TownListView: View {
             }
             Spacer()
             Button(action: {
-                self.townStore.addFavouriteTown(Array(selectedTown)[0])
+                if (!selectedTown.isEmpty) {
+                    self.townStore.addFavouriteTown(Array(selectedTown)[0])
+                }
                 self.isSheetOpened = false
             }, label: {
                 Text("OK")
