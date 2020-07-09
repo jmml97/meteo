@@ -67,6 +67,10 @@ class TownStore: ObservableObject {
         }
     }
     
+    func reloadFavouriteTowns() {
+        favouriteTowns = load(dbFilename: dbFilename, dbTableName: favouriteTownTableName)
+    }
+    
     func addFavouriteTown(_ town: AEMETTown) {
         
         let towns = Table("favouriteTowns")
@@ -80,7 +84,7 @@ class TownStore: ObservableObject {
 //                t.column(name)
 //                t.column(id)
 //            })
-            favouriteTowns = load(dbFilename: dbFilename, dbTableName: "favouriteTowns")
+            reloadFavouriteTowns()
             
         } catch {
             fatalError("Could not insert town data into table: \(error)")
