@@ -58,8 +58,13 @@ struct PredictionView: View {
                 }
             }
         } else {
-            ProgressView("Cargando").onAppear {
-                loader.load(townID)
+            
+            VStack {
+                Spacer()
+                ProgressView("Cargando").onAppear {
+                    loader.load(townID)
+                }
+                Spacer()
             }
         }
         
