@@ -14,13 +14,10 @@ struct TownListView: View {
     @State private var searchText : String = ""
     @Binding var isSheetOpened : Bool
     
-    #if os(macOS)
     @State var selectedTown = Set<AEMETTown>()
-    #endif
     
     @ViewBuilder
     var body: some View {
-        #if os(macOS)
         VStack {
             SearchBar(text: $searchText, placeholder: "Búsqueda de municipios")
             if (searchText.isEmpty) {
@@ -43,36 +40,7 @@ struct TownListView: View {
             }, label: {
                 Text("OK")
             })
-        }.frame(width: 400, height: 300)
-        .padding()
-        #else
-        NavigationView {
-            VStack {
-                SearchBar(text: $searchText, placeholder: "Búsqueda de municipios")
-                if (searchText.isEmpty) {
-                    VStack {
-                        Spacer()
-                        Text("Los resultados de la búsqueda se mostrarán aquí")
-                        Spacer()
-                    }.navigationTitle("Elige un municipio")
-                } else {
-                    List(townStore.getTowns(containingString: searchText), id: \.self) { town in
-                        Button(action: {
-                            self.townStore.addFavouriteTown(town)
-                            //self.favouriteTownManager.favouriteTowns.append(town)
-                            self.isSheetOpened = false
-                        }, label: {
-                            Text(town.name)
-                        })
-                    }.id(UUID())
-                    .navigationTitle("Elige un municipio").id(UUID())
-                    // .id(UUID()) para que la lista se regenere más rápido
-                    // ver: https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui
-                }
-                
-            }
         }
-        #endif
     }
 }
 
