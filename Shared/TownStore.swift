@@ -8,6 +8,7 @@
 import Foundation
 import SQLite
 
+/// Stores and allows retrieving all town related data from a SQLite database
 class TownStore: ObservableObject {
     
     @Published var favouriteTowns: [AEMETTown] = []
@@ -22,6 +23,7 @@ class TownStore: ObservableObject {
     
     init() {
         
+        // Database in bundle is read-only so the first time we must create a copy in a writtable directory.
         let fileManager = FileManager.default
         var dbPath = ""
         
@@ -31,7 +33,7 @@ class TownStore: ObservableObject {
                 .appendingPathComponent(dbFilename)
                 .path
         } catch {
-            
+            fatalError("Couldn't find the included database at path \(dbFilename):\(error)")
         }
         
         do {
@@ -40,25 +42,27 @@ class TownStore: ObservableObject {
                 try fileManager.copyItem(atPath: dbResourcePath, toPath: dbPath)
             }
         } catch {
-            fatalError("Couldn't try to find \(dbFilename) in main bundle.")
+            fatalError("Couldn't create database in a writtable directory:\(error)")
         }
         
         do {
             db = try Connection(dbPath)
         } catch {
-            fatalError("Couldn't load \(dbFilename) from main bundle:\n\(error)")
+            fatalError("Couldn't establish a connection to the database:\(error)")
         }
         
-        favouriteTowns = load(dbFilename: dbFilename, dbTableName: favouriteTownTableName)
+        favouriteTowns = load(dbTableName: favouriteTownTableName)
         //townData = load(dbFilename: dbFilename, dbTableName: townsTableName)
     }
     
-    func load<T: Decodable>(dbFilename: String, dbTableName: String) -> [T] {
+    /// Loads and decodes data from a table.
+    /// - Parameter dbTableName: name of the table whose data is used to decode.
+    func load<T: Decodable>(dbTableName: String) -> [T] {
         
-        let towns = Table(dbTableName)
+        let data = Table(dbTableName)
         
         do {
-            return try db!.prepare(towns).map { row in
+            return try db!.prepare(data).map { row in
                 do {
                     return try row.decode()
                 } catch {
@@ -66,14 +70,15 @@ class TownStore: ObservableObject {
                 }
             }
         } catch {
-            fatalError("Couldn't parse \(dbFilename) as \(T.self):\n\(error)")
+            fatalError("Couldn't parse the contents of \(dbTableName) as \(T.self):\n\(error)")
         }
     }
     
     func reloadFavouriteTowns() {
-        favouriteTowns = load(dbFilename: dbFilename, dbTableName: favouriteTownTableName)
+        favouriteTowns = load(dbTableName: favouriteTownTableName)
     }
     
+    /// Adds a town to the favourite town table and reloads the `favouriteTowns` array.
     func addFavouriteTown(_ town: AEMETTown) {
         
         let towns = Table(favouriteTownTableName)
@@ -87,10 +92,6 @@ class TownStore: ObservableObject {
                 do {
                     let insert = towns.insert(name <- town.name, id <- town.id)
                     try db!.run(insert)
-        //            try db!.run(towns.create { t in
-        //                t.column(name)
-        //                t.column(id)
-        //            })
                     reloadFavouriteTowns()
                     
                 } catch {
@@ -103,6 +104,7 @@ class TownStore: ObservableObject {
         
     }
     
+    /// Removes a town from the favourite town table and reloads the `favouriteTowns` array.
     func removeFavouriteTown(at offsets: IndexSet) {
         for offset in offsets {
             let favouriteTownsTable = Table(favouriteTownTableName)
@@ -118,6 +120,8 @@ class TownStore: ObservableObject {
         }
     }
     
+    /// Returns an array of towns whose name contains `containingString`.
+    /// - Parameter containingString: string used to look for towns.
     func getTowns(containingString: String) -> [AEMETTown] {
         let towns = Table(townsTableName)
         let name = Expression<String>("name")
@@ -134,9 +138,6 @@ class TownStore: ObservableObject {
         } catch {
             fatalError("Could not create array of filtered elements: \(error)")
         }
-        
-        print(containingString)
-        print(returnTowns)
         
         return returnTowns
     }
