@@ -80,18 +80,27 @@ class TownStore: ObservableObject {
         let name = Expression<String>("name")
         let id = Expression<String>("id")
         
+        let townsWithSameName = towns.filter(name == town.name)
+        
         do {
-            let insert = towns.insert(name <- town.name, id <- town.id)
-            try db!.run(insert)
-//            try db!.run(towns.create { t in
-//                t.column(name)
-//                t.column(id)
-//            })
-            reloadFavouriteTowns()
-            
+            if (try db!.scalar(townsWithSameName.count) == 0) {
+                do {
+                    let insert = towns.insert(name <- town.name, id <- town.id)
+                    try db!.run(insert)
+        //            try db!.run(towns.create { t in
+        //                t.column(name)
+        //                t.column(id)
+        //            })
+                    reloadFavouriteTowns()
+                    
+                } catch {
+                    fatalError("Could not insert town data into table: \(error)")
+                }
+            }
         } catch {
-            fatalError("Could not insert town data into table: \(error)")
+            fatalError("Could not count towns with same name: \(error)")
         }
+        
     }
     
     func removeFavouriteTown(at offsets: IndexSet) {
