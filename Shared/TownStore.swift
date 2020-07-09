@@ -15,6 +15,8 @@ class TownStore: ObservableObject {
     
     var db: Connection? = nil
     
+    let favouriteTownTableName = "favouriteTowns"
+    
     let dbFilename = "meteo.sqlite3"
     
     init() {
@@ -46,7 +48,7 @@ class TownStore: ObservableObject {
             fatalError("Couldn't load \(dbFilename) from main bundle:\n\(error)")
         }
         
-        favouriteTowns = load(dbFilename: dbFilename, dbTableName: "favouriteTowns")
+        favouriteTowns = load(dbFilename: dbFilename, dbTableName: favouriteTownTableName)
         townData = load(dbFilename: dbFilename, dbTableName: "towns")
     }
     
@@ -73,7 +75,7 @@ class TownStore: ObservableObject {
     
     func addFavouriteTown(_ town: AEMETTown) {
         
-        let towns = Table("favouriteTowns")
+        let towns = Table(favouriteTownTableName)
         let name = Expression<String>("name")
         let id = Expression<String>("id")
         
