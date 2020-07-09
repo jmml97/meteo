@@ -53,7 +53,7 @@ struct FavouriteTownListView: View {
                 NavigationLink(
                     destination: PredictionView(townID: town.id),
                     label: {
-                        Text(town.nombre)
+                        Text(town.name)
                     })
             }.sheet(isPresented: self.$isSheetOpened, onDismiss: {
                 print("dismiss")

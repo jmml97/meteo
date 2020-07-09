@@ -3,12 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D2AABE324B21A4A00A382E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AABE224B21A4A00A382E5 /* Data.swift */; };
-		3D2AABE424B21A4A00A382E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AABE224B21A4A00A382E5 /* Data.swift */; };
 		3D3F0A6024AFA81200D78FCF /* TownListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A5F24AFA81200D78FCF /* TownListView.swift */; };
 		3D3F0A6124AFA81200D78FCF /* TownListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3F0A5F24AFA81200D78FCF /* TownListView.swift */; };
 		3D63DB5324ADEE87008425E6 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D63DB5224ADEE87008425E6 /* Tests_iOS.swift */; };
@@ -35,6 +33,10 @@
 		3DB5957C24B1E2F5005BDF8F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */; };
 		3DB5957E24B1E8F4005BDF8F /* key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DB5957D24B1E8F4005BDF8F /* key.plist */; };
 		3DB5957F24B1E8F4005BDF8F /* key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DB5957D24B1E8F4005BDF8F /* key.plist */; };
+		3DE19F2824B7825600B6690D /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 3DE19F2724B7825600B6690D /* SQLite */; };
+		3DE19F2F24B7846100B6690D /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 3DE19F2E24B7846100B6690D /* SQLite */; };
+		3DE19F3124B7863D00B6690D /* meteo.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DE19F3024B7863D00B6690D /* meteo.sqlite3 */; };
+		3DE19F3224B7863D00B6690D /* meteo.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DE19F3024B7863D00B6690D /* meteo.sqlite3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +57,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3D2AABE224B21A4A00A382E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		3D3F0A5F24AFA81200D78FCF /* TownListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownListView.swift; sourceTree = "<group>"; };
 		3D63DB3724ADEE85008425E6 /* MeteoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoApp.swift; sourceTree = "<group>"; };
 		3D63DB3824ADEE85008425E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 		3DB5957724B1D844005BDF8F /* TownStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownStore.swift; sourceTree = "<group>"; };
 		3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		3DB5957D24B1E8F4005BDF8F /* key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = key.plist; sourceTree = "<group>"; };
+		3DE19F3024B7863D00B6690D /* meteo.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = meteo.sqlite3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DE19F2824B7825600B6690D /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DE19F2F24B7846100B6690D /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +133,7 @@
 				3D63DB5124ADEE87008425E6 /* Tests iOS */,
 				3D63DB5C24ADEE87008425E6 /* Tests macOS */,
 				3D63DB3F24ADEE87008425E6 /* Products */,
+				3DE19F2D24B7846100B6690D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,7 +146,6 @@
 				3DB5957A24B1E2F5005BDF8F /* SearchBar.swift */,
 				3D63DB7424AE180F008425E6 /* WebService.swift */,
 				3D63DB7A24AE1F07008425E6 /* Models.swift */,
-				3D2AABE224B21A4A00A382E5 /* Data.swift */,
 				3D63DB7D24AE2050008425E6 /* PredictionDataLoader.swift */,
 				3D63DB7724AE1C85008425E6 /* PredictionView.swift */,
 				3D63DB3824ADEE85008425E6 /* ContentView.swift */,
@@ -203,8 +207,16 @@
 				3D2AABE124B20D6600A382E5 /* Previews */,
 				3DB5957D24B1E8F4005BDF8F /* key.plist */,
 				3DA6C72424AFE55D008B6857 /* municipios.json */,
+				3DE19F3024B7863D00B6690D /* meteo.sqlite3 */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		3DE19F2D24B7846100B6690D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,6 +235,9 @@
 			dependencies = (
 			);
 			name = iOS;
+			packageProductDependencies = (
+				3DE19F2724B7825600B6690D /* SQLite */,
+			);
 			productName = iOS;
 			productReference = 3D63DB3E24ADEE87008425E6 /* Meteo.app */;
 			productType = "com.apple.product-type.application";
@@ -240,6 +255,9 @@
 			dependencies = (
 			);
 			name = macOS;
+			packageProductDependencies = (
+				3DE19F2E24B7846100B6690D /* SQLite */,
+			);
 			productName = macOS;
 			productReference = 3D63DB4624ADEE87008425E6 /* Meteo.app */;
 			productType = "com.apple.product-type.application";
@@ -314,6 +332,9 @@
 				Base,
 			);
 			mainGroup = 3D63DB3124ADEE85008425E6;
+			packageReferences = (
+				3DE19F2624B7825600B6690D /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+			);
 			productRefGroup = 3D63DB3F24ADEE87008425E6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -333,6 +354,7 @@
 			files = (
 				3D63DB6424ADEE87008425E6 /* Assets.xcassets in Resources */,
 				3DB5957E24B1E8F4005BDF8F /* key.plist in Resources */,
+				3DE19F3124B7863D00B6690D /* meteo.sqlite3 in Resources */,
 				3DA6C72524AFE55D008B6857 /* municipios.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,6 +365,7 @@
 			files = (
 				3D63DB6524ADEE87008425E6 /* Assets.xcassets in Resources */,
 				3DB5957F24B1E8F4005BDF8F /* key.plist in Resources */,
+				3DE19F3224B7863D00B6690D /* meteo.sqlite3 in Resources */,
 				3DA6C72624AFE55D008B6857 /* municipios.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,7 +394,6 @@
 				3D63DB7524AE180F008425E6 /* WebService.swift in Sources */,
 				3D63DB7E24AE2050008425E6 /* PredictionDataLoader.swift in Sources */,
 				3D63DB6224ADEE87008425E6 /* ContentView.swift in Sources */,
-				3D2AABE324B21A4A00A382E5 /* Data.swift in Sources */,
 				3DB5957824B1D844005BDF8F /* TownStore.swift in Sources */,
 				3D3F0A6024AFA81200D78FCF /* TownListView.swift in Sources */,
 				3D63DB6024ADEE87008425E6 /* MeteoApp.swift in Sources */,
@@ -388,7 +410,6 @@
 				3D63DB7624AE180F008425E6 /* WebService.swift in Sources */,
 				3D63DB7F24AE2050008425E6 /* PredictionDataLoader.swift in Sources */,
 				3D63DB6324ADEE87008425E6 /* ContentView.swift in Sources */,
-				3D2AABE424B21A4A00A382E5 /* Data.swift in Sources */,
 				3DB5957924B1D844005BDF8F /* TownStore.swift in Sources */,
 				3D3F0A6124AFA81200D78FCF /* TownListView.swift in Sources */,
 				3D63DB6124ADEE87008425E6 /* MeteoApp.swift in Sources */,
@@ -766,6 +787,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3DE19F2624B7825600B6690D /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3DE19F2724B7825600B6690D /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DE19F2624B7825600B6690D /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		3DE19F2E24B7846100B6690D /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DE19F2624B7825600B6690D /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3D63DB3224ADEE85008425E6 /* Project object */;
 }

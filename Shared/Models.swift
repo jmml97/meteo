@@ -169,7 +169,7 @@ struct GenericAEMETResponse: Codable {
 // MARK: - Towns
 
 struct AEMETTown: Codable, Hashable {
-    let nombre, id: String
+    let name, id: String
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

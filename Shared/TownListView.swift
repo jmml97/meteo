@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TownListView: View {
     
-    @EnvironmentObject var favouriteTownManager: TownStore
+    @EnvironmentObject var townStore: TownStore
     
     @State private var searchText : String = ""
     @Binding var isSheetOpened : Bool
@@ -30,15 +30,15 @@ struct TownListView: View {
                     Spacer()
                 }
             } else {
-                List(townData.filter {
-                    self.searchText.isEmpty ? true : $0.nombre.lowercased().contains(self.searchText.lowercased())
+                List(townStore.townData.filter {
+                    self.searchText.isEmpty ? true : $0.name.lowercased().contains(self.searchText.lowercased())
                 }, id:\.self, selection: $selectedTown) { town in
-                    Text(town.nombre)
+                    Text(town.name)
                 }.id(UUID())
             }
             Spacer()
             Button(action: {
-                self.favouriteTownManager.favouriteTowns.append(contentsOf: selectedTown)
+                self.townStore.addFavouriteTown(Array(selectedTown)[0])
                 self.isSheetOpened = false
             }, label: {
                 Text("OK")
@@ -56,14 +56,15 @@ struct TownListView: View {
                         Spacer()
                     }.navigationTitle("Elige un municipio")
                 } else {
-                    List(townData.filter {
-                        self.searchText.isEmpty ? true : $0.nombre.lowercased().contains(self.searchText.lowercased())
+                    List(townStore.townData.filter {
+                        self.searchText.isEmpty ? true : $0.name.lowercased().contains(self.searchText.lowercased())
                     }, id:\.self) { town in
                         Button(action: {
-                            self.favouriteTownManager.favouriteTowns.append(town)
+                            self.townStore.addFavouriteTown(town)
+                            //self.favouriteTownManager.favouriteTowns.append(town)
                             self.isSheetOpened = false
                         }, label: {
-                            Text(town.nombre)
+                            Text(town.name)
                         })
                     }.navigationTitle("Elige un municipio").id(UUID())
                     // .id(UUID()) para que la lista se regenere más rápido
