@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: Constants
 
-let weatherIcons: [AEMETDescripcion: String] = [
+let weatherIcons: [AEMETSkyDescription: String] = [
     .despejado: "sun.max",
     .cubierto: "cloud",
     .nuboso: "smoke",
@@ -49,9 +49,9 @@ struct PredictionView: View {
     var body: some View {
         if let hourlyPredictions = loader.hourlyPredictionsContainer {
             VStack(alignment: .leading) {
-                MetadataView(province: hourlyPredictions.provincia, predictionDate: hourlyPredictions.elaborado)
+                MetadataView(province: hourlyPredictions.province, predictionDate: hourlyPredictions.created)
                 .padding(10)
-                HourlyPredictionView(predictions: hourlyPredictions).navigationTitle(hourlyPredictions.nombre)
+                HourlyPredictionView(predictions: hourlyPredictions).navigationTitle(hourlyPredictions.name)
                 Spacer()
                 if let dailyPredictions = loader.dailyPredictionsContainer {
                     DailyPredictionListView(predictions: dailyPredictions)
@@ -63,7 +63,7 @@ struct PredictionView: View {
                 Spacer()
                 ProgressView("Cargando").onAppear {
                     loader.load(townID)
-                }
+                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 Spacer()
             }
         }
@@ -100,11 +100,11 @@ struct HourlyPredictionView: View {
                         Text("Cielo")
                         Text("Temperatura")
                     }
-                    ForEach(predictions.prediccion.dia, id:\.fecha) { d in
-                        Text(getFormattedDateFromString(dateString: d.fecha, inFormat: isoDateFormatString, outFormat: "d MMM"))
-                        let datosHorarios = Array(zip(d.temperatura, d.estadoCielo))
-                        ForEach(datosHorarios, id:\.0.periodo) { dato in
-                            HourlyDataView(period: dato.0.periodo, temp: dato.0.value, sky: dato.1.descripcion)
+                    ForEach(predictions.prediction.day, id:\.date) { d in
+                        Text(getFormattedDateFromString(dateString: d.date, inFormat: isoDateFormatString, outFormat: "d MMM"))
+                        let datosHorarios = Array(zip(d.temperature, d.sky))
+                        ForEach(datosHorarios, id:\.0.period) { dato in
+                            HourlyDataView(period: dato.0.period!, temp: dato.0.value, sky: dato.1.description)
                         }
                     }
                 }
@@ -116,7 +116,7 @@ struct HourlyPredictionView: View {
 struct HourlyDataView: View {
     
     let period, temp: String
-    let sky: AEMETDescripcion
+    let sky: AEMETSkyDescription
     
     var body: some View {
         VStack(spacing: 10) {
@@ -138,8 +138,8 @@ struct DailyPredictionListView: View {
                 .font(.title)
                 .padding(10.0)
             List {
-                ForEach(predictions.prediccion.dia, id:\.fecha) { d in
-                    DailyPredictionView(date: d.fecha, min: String(d.temperatura.minima), max: String(d.temperatura.maxima))
+                ForEach(predictions.prediction.day, id:\.date) { d in
+                    DailyPredictionView(date: d.date, min: String(d.temperature.min), max: String(d.temperature.max))
                 }
             }
         }

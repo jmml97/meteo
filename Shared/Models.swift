@@ -9,108 +9,209 @@ import Foundation
 
 // MARK: - AEMETPredictionContainer
 struct AEMETHourlyPredictionContainer: Codable {
-    let elaborado, nombre, provincia: String
-    let prediccion: AEMETHourlyPrediction
+    let created, name, province: String
+    let prediction: AEMETHourlyPrediction
     let id, version: String
-    let origen: AEMETSource
+    let origin: AEMETSource
+    
+    enum CodingKeys: String, CodingKey {
+        case created = "elaborado"
+        case name = "nombre"
+        case province = "provincia"
+        case prediction = "prediccion"
+        
+        case id
+        case version
+        
+        case origin = "origen"
+    }
 }
 
 // MARK: - AEMETDailyPredictionContainer
 struct AEMETDailyPredictionContainer: Codable {
-    let elaborado, nombre, provincia: String
-    let prediccion: AEMETDailyPrediction
+    let created, name, province: String
+    let prediction: AEMETDailyPrediction
     let id, version: Int
-    let origen: AEMETSource
+    let origin: AEMETSource
+    
+    enum CodingKeys: String, CodingKey {
+        case created = "elaborado"
+        case name = "nombre"
+        case province = "provincia"
+        case prediction = "prediccion"
+        
+        case id
+        case version
+        
+        case origin = "origen"
+    }
 }
 
 // MARK: - AEMETSource
 struct AEMETSource: Codable {
-    let productor: String
-    let web, enlace, notaLegal: URL
+    let creator: String
+    let web, link, legalNote: URL
     let language, copyright: String
+    
+    enum CodingKeys: String, CodingKey {
+        case creator = "productor"
+        case web
+        case link = "enlace"
+        case legalNote = "notaLegal"
+        
+        case language
+        case copyright
+    }
 }
 
 // MARK: - AEMETHourlyPrediction
-// A prediction with hourly values.
+/// A prediction with hourly values.
 struct AEMETHourlyPrediction: Codable {
-    let dia: [AEMETHourlyDayData]
+    let day: [AEMETHourlyDayData]
+    
+    enum CodingKeys: String, CodingKey {
+        case day = "dia"
+    }
 }
 
 // MARK: - AEMETHourlyDayData
 /// Contais information for a day on the hourly prediction
 struct AEMETHourlyDayData: Codable {
-    let estadoCielo: [AEMETEstadoCielo]
-    let precipitacion, probPrecipitacion, probTormenta, nieve: [AEMETHourlyGenericData]
-    let probNieve, temperatura, sensTermica, humedadRelativa: [AEMETHourlyGenericData]
-    let vientoAndRachaMax: [AEMETWind]
-    let fecha, orto, ocaso: String
+    let sky: [AEMETSky]
+    let rain, rainProbability, stormProbability, snow: [AEMETPeriodicData]
+    let snowProbability, temperature, sensation, humidity: [AEMETPeriodicData]
+    let wind: [AEMETWind]
+    let date, sunrise, sunset: String
+    
+    enum CodingKeys: String, CodingKey {
+        case sky = "estadoCielo"
+        case rain = "precipitacion"
+        case rainProbability = "probPrecipitacion"
+        case stormProbability = "probTormenta"
+        case snow = "nieve"
+        case snowProbability = "probNieve"
+        case temperature = "temperatura"
+        case sensation = "sensTermica"
+        case humidity = "humedadRelativa"
+        
+        case wind = "vientoAndRachaMax"
+        case date = "fecha"
+        case sunrise = "orto"
+        case sunset = "ocaso"
+    }
 }
 
 // MARK: - AEMETHourlyGenericData
 /// A generic contanier `value` - `periodo` that stores information of a parameter for a certain period of time
-struct AEMETHourlyGenericData: Codable {
-    let value, periodo: String
+struct AEMETPeriodicData: Codable {
+    let value: String
+    let period: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case value
+        case period = "periodo"
+    }
+    
+    init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            period = try? container.decode(String.self, forKey: .period)
+            do {
+                value = try String(container.decode(Int.self, forKey: .value))
+            } catch DecodingError.typeMismatch {
+                value = try container.decode(String.self, forKey: .value)
+            }
+        }
 }
 
 // ---------------------
 
 // MARK: - AEMETDailyPrediction
 struct AEMETDailyPrediction: Codable {
-    let dia: [AEMETDailyDayData]
+    let day: [AEMETDailyDayData]
+    
+    enum CodingKeys: String, CodingKey {
+        case day = "dia"
+    }
 }
 
 // MARK: - AEMETDailyDayData
 struct AEMETDailyDayData: Codable {
-    let probPrecipitacion: [AEMETProbPrecipitacion]
-    let cotaNieveProv: [AEMETCotaNieveProv]
-    let estadoCielo: [AEMETEstadoCielo]
-    let viento: [AEMETDailyWind]
-    let rachaMax: [AEMETCotaNieveProv]
-    let temperatura, sensTermica, humedadRelativa: AEMETHumedadRelativa
-    let uvMax: Int?
-    let fecha: String
-}
-
-// MARK: - AEMETCotaNieveProv
-struct AEMETCotaNieveProv: Codable {
-    let value: String
-    let periodo: String?
+    let rainProbability: [AEMETPeriodicData]
+    let snowLevel: [AEMETPeriodicData]
+    let sky: [AEMETSky]
+    let wind: [AEMETDailyWind]
+    let maxWindGust: [AEMETPeriodicData]
+    let temperature, sensation, humidity: AEMETPeriodicDataWithMaxMin
+    let maxUV: Int?
+    let date: String
+    
+    enum CodingKeys: String, CodingKey {
+        case rainProbability = "probPrecipitacion"
+        case snowLevel = "cotaNieveProv"
+        case sky = "estadoCielo"
+        case wind = "viento"
+        case maxWindGust = "rachaMax"
+        case temperature = "temperatura"
+        case sensation = "sensTermica"
+        case humidity = "humedadRelativa"
+        
+        case maxUV = "uvMax"
+        case date = "fecha"
+    }
 }
 
 // MARK: - AEMETHumedadRelativa
-struct AEMETHumedadRelativa: Codable {
-    let maxima, minima: Int
-    let dato: [AEMETDato]
+struct AEMETPeriodicDataWithMaxMin: Codable {
+    let max, min: Int
+    let periodicData: [AEMETData]
+    
+    enum CodingKeys: String, CodingKey {
+        case max = "maxima"
+        case min = "minima"
+        case periodicData = "dato"
+    }
+    
 }
 
 // MARK: - AEMETDato
-struct AEMETDato: Codable {
-    let value, hora: Int
-}
-
-// MARK: - AEMETProbPrecipitacion
-struct AEMETProbPrecipitacion: Codable {
-    let value: Int
-    let periodo: String?
+struct AEMETData: Codable {
+    let value, hour: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case value
+        case hour = "hora"
+    }
 }
 
 // MARK: - AEMETViento
 struct AEMETDailyWind: Codable {
-    let direccion: String
-    let velocidad: Int
-    let periodo: String?
+    let direction: String
+    let speed: Int
+    let period: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case direction = "direccion"
+        case speed = "velocidad"
+        case period = "periodo"
+    }
 }
 
 // ---------------------
 
 // MARK: - AEMETEstadoCielo
-struct AEMETEstadoCielo: Codable {
+struct AEMETSky: Codable {
     let value:String
-    let periodo: String?
-    let descripcion: AEMETDescripcion
+    let period: String?
+    let description: AEMETSkyDescription
+    
+    enum CodingKeys: String, CodingKey {
+        case value
+        case period = "periodo"
+        case description = "descripcion"
+    }
 }
 
-enum AEMETDescripcion: String, Codable {
+enum AEMETSkyDescription: String, Codable {
     case despejado = "Despejado"
     case cubierto = "Cubierto"
     case cubiertoLluviaEscasa = "Cubierto con lluvia escasa"
@@ -136,10 +237,17 @@ enum AEMETDescripcion: String, Codable {
 // MARK: - AEMETWind
 /// - Parameter value: fastest wind speed
 struct AEMETWind: Codable {
-    let direccion: [AEMETDireccion]?
-    let velocidad: [String]?
-    let periodo: String
+    let direction: [AEMETDireccion]?
+    let speed: [String]?
+    let period: String
     let value: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case direction = "direccion"
+        case speed = "velocidad"
+        case period = "periodo"
+        case value
+    }
 }
 
 enum AEMETDireccion: String, Codable {
@@ -158,10 +266,17 @@ typealias AEMETRoot = [AEMETHourlyPredictionContainer]
 
 struct GenericAEMETResponse: Codable {
     
-    let descripcion: String
-    let estado: Int
-    let datos: String
-    let metadatos: String
+    let description: String
+    let status: Int
+    let data: String
+    let metadata: String
+    
+    enum CodingKeys: String, CodingKey {
+        case description = "descripcion"
+        case status = "estado"
+        case data = "datos"
+        case metadata = "metadatos"
+    }
     
 }
 

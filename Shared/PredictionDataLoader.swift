@@ -27,7 +27,7 @@ class PredictionDataLoader: ObservableObject {
             
             WebService().loadDataRequest(url: url) { response in
                 
-                guard let predictionURLString = response?.datos else {
+                guard let predictionURLString = response?.data else {
                     fatalError("Could not unwrap string of data URL")
                 }
                 
@@ -51,7 +51,7 @@ class PredictionDataLoader: ObservableObject {
             
             WebService().loadDataRequest(url: url) { response in
                 
-                guard let predictionURLString = response?.datos else {
+                guard let predictionURLString = response?.data else {
                     fatalError("Could not unwrap string of data URL")
                 }
                 
