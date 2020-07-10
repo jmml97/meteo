@@ -75,7 +75,8 @@ class TownStore: ObservableObject {
     }
     
     func reloadFavouriteTowns() {
-        favouriteTowns = load(dbTableName: favouriteTownTableName)
+        favouriteTowns = load(dbTableName: favouriteTownTableName).sorted(by: { $0.sortOrder! > $1.sortOrder! })
+        print(favouriteTowns)
     }
     
     /// Adds a town to the favourite town table and reloads the `favouriteTowns` array.
@@ -84,13 +85,14 @@ class TownStore: ObservableObject {
         let towns = Table(favouriteTownTableName)
         let name = Expression<String>("name")
         let id = Expression<String>("id")
+        let sortOrder = Expression<Int>("sortOrder")
         
         let townsWithSameName = towns.filter(name == town.name)
         
         do {
             if (try db!.scalar(townsWithSameName.count) == 0) {
                 do {
-                    let insert = towns.insert(name <- town.name, id <- town.id)
+                    let insert = towns.insert(name <- town.name, id <- town.id, sortOrder <- favouriteTowns.count)
                     try db!.run(insert)
                     reloadFavouriteTowns()
                     
@@ -118,6 +120,11 @@ class TownStore: ObservableObject {
                 fatalError("Could not delete favourite town: \(error)")
             }
         }
+    }
+    
+    func moveFavouriteTown(from source: IndexSet, to destination: Int) {
+        favouriteTowns.move(fromOffsets: source, toOffset: destination)
+        // TODO: Save changes to database
     }
     
     /// Returns an array of towns whose name contains `containingString`.

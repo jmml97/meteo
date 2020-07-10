@@ -285,6 +285,7 @@ struct GenericAEMETResponse: Codable {
 
 struct AEMETTown: Codable, Hashable {
     let name, id: String
+    var sortOrder: Int?
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

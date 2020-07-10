@@ -16,17 +16,18 @@ struct ContentView: View {
             #if os(iOS)
             FavouriteTownListView(isSheetOpened: $isSheetOpened)
                 .navigationBarItems(
-                    trailing: Button(
-                        action: {
-                            self.isSheetOpened = true
-                        },
-                        label: {
-                            HStack {
-                                Image(systemName: "plus")
+                    trailing: HStack {
+                        EditButton()
+                        Button(
+                            action: {
+                                self.isSheetOpened = true
+                            },
+                            label: {
                                 Text("Añadir")
                             }
-                        }
-                    )
+                        )
+                    }
+                    
                 )
             #else
             FavouriteTownListView(isSheetOpened: $isSheetOpened)
@@ -56,7 +57,9 @@ struct FavouriteTownListView: View {
                         label: {
                             Text(town.name)
                         })
-                }.onDelete(perform: townStore.removeFavouriteTown)
+                }
+                .onDelete(perform: townStore.removeFavouriteTown)
+                .onMove(perform: townStore.moveFavouriteTown)
             }.sheet(isPresented: self.$isSheetOpened, onDismiss: {
                 print("dismiss")
             }) {
