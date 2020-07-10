@@ -40,7 +40,7 @@ struct TownListView: View {
             }, label: {
                 Text("OK")
             })
-        }
+        }.padding().frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
     }
 }
 
