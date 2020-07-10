@@ -42,18 +42,18 @@ func getFormattedDateFromString(dateString: String, inFormat: String, outFormat:
 /// - Parameter townID: id of the town this view represents, needed to pull data
 struct PredictionView: View {
     
-    @ObservedObject var loader = PredictionDataLoader()
+    @ObservedObject var manager = PredictionManager()
     var townID: String
     
     @ViewBuilder
     var body: some View {
-        if let hourlyPredictions = loader.hourlyPredictionsContainer {
+        if let hourlyPredictions = manager.hourlyPredictionsContainer {
             VStack(alignment: .leading) {
                 MetadataView(province: hourlyPredictions.province, predictionDate: hourlyPredictions.created)
                 .padding(10)
                 HourlyPredictionView(predictions: hourlyPredictions).navigationTitle(hourlyPredictions.name)
                 Spacer()
-                if let dailyPredictions = loader.dailyPredictionsContainer {
+                if let dailyPredictions = manager.dailyPredictionsContainer {
                     DailyPredictionListView(predictions: dailyPredictions)
                 }
             }
@@ -62,7 +62,9 @@ struct PredictionView: View {
             VStack {
                 Spacer()
                 ProgressView("Cargando").onAppear {
-                    loader.load(townID)
+                    manager.townID = townID
+                    manager.loadHourlyPredictions()
+                    manager.loadDailyPredictions()
                 }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 Spacer()
             }
