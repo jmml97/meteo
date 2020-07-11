@@ -144,6 +144,25 @@ class PredictionManager: NSObject, ObservableObject {
         }
         
     }
+    
+    func getHourlyPredictions() -> AEMETHourlyPrediction {
+        
+        guard let hourlyPredictionsContainer = hourlyPredictionsContainer else {
+            fatalError("Hourly predictions are empty.")
+        }
+        
+        let hour = Calendar.current.component(.hour, from: Date())
+        
+        let todayTemperatures = hourlyPredictionsContainer.prediction.days[0].temperature.filter { Int($0.period!)! >= hour }
+        let todaySky = hourlyPredictionsContainer.prediction.days[0].sky.filter { Int($0.period!)! >= hour }
+        
+        var filteredHourlyPredictions = hourlyPredictionsContainer.prediction
+        filteredHourlyPredictions.days[0].temperature = todayTemperatures
+        filteredHourlyPredictions.days[0].sky = todaySky
+        
+        return filteredHourlyPredictions
+        
+    }
 }
 
 // AEMET uses self signed certificates and by default URLSession refuses to download data in that case.

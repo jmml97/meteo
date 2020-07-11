@@ -49,14 +49,21 @@ struct PredictionView: View {
     var body: some View {
         if let hourlyPredictions = manager.hourlyPredictionsContainer {
             VStack(alignment: .leading) {
+                #if os(macOS)
+                Text(hourlyPredictions.name)
+                    .font(.title)
+                    .fontWeight(.bold)
+                #endif
                 MetadataView(province: hourlyPredictions.province, predictionDate: hourlyPredictions.created)
-                .padding(10)
-                HourlyPredictionView(predictions: hourlyPredictions).navigationTitle(hourlyPredictions.name)
-                Spacer()
+                Divider()
+                HourlyPredictionView(prediction: manager.getHourlyPredictions()).navigationTitle(hourlyPredictions.name)
+                Divider()
                 if let dailyPredictions = manager.dailyPredictionsContainer {
                     DailyPredictionListView(predictions: dailyPredictions)
                 }
+                Spacer()
             }
+            .padding([.top, .leading])
         } else {
             
             VStack {
@@ -88,29 +95,30 @@ struct MetadataView: View {
 
 struct HourlyPredictionView: View {
     
-    let predictions: AEMETHourlyPredictionContainer
+    let prediction: AEMETHourlyPrediction
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("Predicción horaria")
-                .font(.title)
-                .padding(10.0)
-            ScrollView(.horizontal) {
-                HStack(spacing: 20) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Hora")
-                        Text("Cielo")
-                        Text("Temperatura")
-                    }
-                    ForEach(predictions.prediction.day, id:\.date) { d in
-                        Text(getFormattedDateFromString(dateString: d.date, inFormat: isoDateFormatString, outFormat: "d MMM"))
-                        let datosHorarios = Array(zip(d.temperature, d.sky))
-                        ForEach(datosHorarios, id:\.0.period) { dato in
-                            HourlyDataView(period: dato.0.period!, temp: dato.0.value, sky: dato.1.description)
+                .font(.headline)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(prediction.days, id:\.date) { d in
+                        VStack(alignment: .leading) {
+                            Text(getFormattedDateFromString(dateString: d.date, inFormat: isoDateFormatString, outFormat: "EEEE"))
+                                .font(.subheadline)
+                                .padding(.bottom)
+                            let datosHorarios = Array(zip(d.temperature, d.sky))
+                            HStack(spacing: 20) {
+                                ForEach(datosHorarios, id:\.0.period) { dato in
+                                    HourlyDataView(period: dato.0.period!, temp: dato.0.value, sky: dato.1.description)
+                                }
+                            }
                         }
+                        Divider().frame(height: 100)
                     }
                 }
-            }.padding(.leading, 10.0)
+            }
         }
     }
 }
@@ -123,8 +131,10 @@ struct HourlyDataView: View {
     var body: some View {
         VStack(spacing: 10) {
             Text(period + "h")
-            Image(systemName: weatherIcons[sky, default: "tornado"])
+                .foregroundColor(Color.gray)
+            Image(systemName: weatherIcons[sky, default: "tornado"]).font(.system(size: 24))
             Text(temp + "º")
+                .fontWeight(.bold)
         }
     }
 }
@@ -135,13 +145,13 @@ struct DailyPredictionListView: View {
     let predictions: AEMETDailyPredictionContainer
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("Predicción diaria")
-                .font(.title)
-                .padding(10.0)
-            List {
+                .font(.headline)
+            VStack(alignment: .custom) {
                 ForEach(predictions.prediction.day, id:\.date) { d in
-                    DailyPredictionView(date: d.date, min: String(d.temperature.min), max: String(d.temperature.max))
+                    //Text(predictions.prediction.day[0].sky[0].description)
+                    DailyPredictionView(date: d.date, min: String(d.temperature.min), max: String(d.temperature.max), sky: d.sky[0].description)
                 }
             }
         }
@@ -151,16 +161,30 @@ struct DailyPredictionListView: View {
 struct DailyPredictionView: View {
     
     let date, min, max: String
+    let sky: AEMETSkyDescription
     
     var body: some View {
         HStack {
-            Text(getFormattedDateFromString(dateString: date, inFormat: isoDateFormatString, outFormat: "d MMM"))
+            Text(getFormattedDateFromString(dateString: date, inFormat: isoDateFormatString, outFormat: "EEEE d"))
+            Divider().frame(height: 20).alignmentGuide(.custom) { $0[.leading] }
+            Text(String(max) + "º")
+            Text(String(min) + "º")
             Divider().frame(height: 20)
-            Text("mín: " + String(min))
-            Text("máx: " + String(max))
+            Image(systemName: weatherIcons[sky, default: "tornado"])
+            Text(sky.rawValue)
         }
     }
     
+}
+
+struct CustomAlignment: AlignmentID {
+    static func defaultValue(in context: ViewDimensions) -> CGFloat {
+        return context[.leading]
+    }
+}
+
+extension HorizontalAlignment {
+    static let custom: HorizontalAlignment = HorizontalAlignment(CustomAlignment.self)
 }
 
 // MARK: - Previews
@@ -168,13 +192,20 @@ struct DailyPredictionView: View {
 struct MetadataView_Previews: PreviewProvider {
     
     static var previews: some View {
-        MetadataView(province: "Inventada", predictionDate: "2020-07-06T00:00:00")
+        MetadataView(province: "Provincia", predictionDate: "2020-07-06T00:00:00")
+    }
+}
+
+struct HourlyDataView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        HourlyDataView(period: "12:00", temp: "23", sky: AEMETSkyDescription.cubierto)
     }
 }
 
 struct DailyPredictionView_Previews: PreviewProvider {
     
     static var previews: some View {
-        DailyPredictionView(date: "2020-07-06T00:00:00", min: "19", max: "34")
+        DailyPredictionView(date: "2020-07-06T00:00:00", min: "19", max: "34", sky: AEMETSkyDescription.cubierto)
     }
 }

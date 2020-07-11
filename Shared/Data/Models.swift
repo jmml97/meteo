@@ -10,7 +10,7 @@ import Foundation
 // MARK: - AEMETPredictionContainer
 struct AEMETHourlyPredictionContainer: Codable {
     let created, name, province: String
-    let prediction: AEMETHourlyPrediction
+    var prediction: AEMETHourlyPrediction
     let id, version: String
     let origin: AEMETSource
     
@@ -67,20 +67,20 @@ struct AEMETSource: Codable {
 // MARK: - AEMETHourlyPrediction
 /// A prediction with hourly values.
 struct AEMETHourlyPrediction: Codable {
-    let day: [AEMETHourlyDayData]
+    var days: [AEMETHourlyDayData]
     
     enum CodingKeys: String, CodingKey {
-        case day = "dia"
+        case days = "dia"
     }
 }
 
 // MARK: - AEMETHourlyDayData
 /// Contais information for a day on the hourly prediction
 struct AEMETHourlyDayData: Codable {
-    let sky: [AEMETSky]
-    let rain, rainProbability, stormProbability, snow: [AEMETPeriodicData]
-    let snowProbability, temperature, sensation, humidity: [AEMETPeriodicData]
-    let wind: [AEMETWind]
+    var sky: [AEMETSky]
+    var rain, rainProbability, stormProbability, snow: [AEMETPeriodicData]
+    var snowProbability, temperature, sensation, humidity: [AEMETPeriodicData]
+    var wind: [AEMETWind]
     let date, sunrise, sunset: String
     
     enum CodingKeys: String, CodingKey {
