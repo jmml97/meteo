@@ -18,7 +18,7 @@ struct FavouriteTownListView: View {
             List {
                 ForEach(townStore.favouriteTowns, id: \.id) { town in
                     NavigationLink(
-                        destination: PredictionView(townID: town.id),
+                        destination: PredictionViewContainer(townID: town.id),
                         label: {
                             Text(town.name)
                         })

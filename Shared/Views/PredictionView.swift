@@ -46,7 +46,7 @@ func getFormattedDateFromString(dateString: String, inFormat: String, outFormat:
 
 /// Main prediction view
 /// - Parameter townID: id of the town this view represents, needed to pull data
-struct PredictionView: View {
+struct PredictionViewContainer: View {
     
     @ObservedObject var manager = PredictionManager()
     var townID: String
@@ -54,22 +54,24 @@ struct PredictionView: View {
     @ViewBuilder
     var body: some View {
         if let hourlyPredictions = manager.hourlyPredictionsContainer {
-            VStack(alignment: .leading) {
-                #if os(macOS)
-                Text(hourlyPredictions.name)
-                    .font(.title)
-                    .fontWeight(.bold)
-                #endif
-                MetadataView(province: hourlyPredictions.province, predictionDate: hourlyPredictions.created)
-                Divider()
-                HourlyPredictionView(prediction: manager.getHourlyPredictions()).navigationTitle(hourlyPredictions.name)
-                Divider()
-                if let dailyPredictions = manager.dailyPredictionsContainer {
-                    DailyPredictionListView(predictions: dailyPredictions)
-                }
-                Spacer()
+            ScrollView(.vertical) {
+                VStack(alignment: .leading) {
+                    #if os(macOS)
+                    Text(hourlyPredictions.name)
+                        .font(.title)
+                        .fontWeight(.bold)
+                    #endif
+                    MetadataView(province: hourlyPredictions.province, predictionDate: hourlyPredictions.created)
+                    CurrentDataView(data: manager.getCurrentData())
+                    Spacer().frame(height: 50)
+                    HourlyPredictionView(prediction: manager.getHourlyPredictions()).navigationTitle(hourlyPredictions.name)
+                    Spacer().frame(height: 50)
+                    if let dailyPredictions = manager.dailyPredictionsContainer {
+                        DailyPredictionListView(predictions: dailyPredictions)
+                    }
+                    Spacer()
+                }.padding([.top, .leading])
             }
-            .padding([.top, .leading])
         } else {
             
             VStack {
@@ -86,6 +88,17 @@ struct PredictionView: View {
     }
 }
 
+struct PredictionView: View {
+    
+    @Binding var manager: PredictionManager
+    
+    var body: some View {
+        ScrollView(.vertical) {
+            
+        }
+    }
+}
+
 struct MetadataView: View {
     
     let province, predictionDate: String
@@ -95,6 +108,21 @@ struct MetadataView: View {
             Text(province).font(Font.system(.body).smallCaps())
             Divider().frame(height: 20)
             Text("Elaboración: \(getFormattedDateFromString(dateString: predictionDate, inFormat: isoDateFormatString, outFormat: "MM/dd/yyyy HH:mm"))")
+        }
+    }
+}
+
+struct CurrentDataView: View {
+    
+    let data: (AEMETPeriodicData, AEMETSky)
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(data.0.value + "º").font(.system(size: 36))
+                Image(systemName: weatherIcons[data.1.description, default: "tornado"]).font(.system(size: 36))
+            }
+            Text(data.1.description.rawValue)
         }
     }
 }
@@ -183,7 +211,7 @@ struct DailyPredictionView: View {
                 Text(sky.rawValue)
                 Image(systemName: weatherIcons[sky, default: "tornado"])
             }
-        }.frame(maxWidth: 300)
+        }.frame(maxWidth: 400)
         .padding(.top)
         
     }
