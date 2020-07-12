@@ -3,6 +3,23 @@
 ![Screenshots of the app](meteo.png)
 
 Meteo is a project I am working on to learn SwiftUI.
-The app is not finished: neither design nor functionalities.
+
+⚠️ The app is not finished: neither design nor functionalities.
 
 All suggestions are welcome, having in mind the considerations stated above.
+
+## Building the app
+
+You need macOS Big Sur Beta, iOS 14 Beta and Xcode 12 Beta.
+
+## Built with
+
+- [SQLite.swift](https://github.com/stephencelis/SQLite.swift) - Used for storing town data
+
+## Author
+
+- [José María Martín Luque](https://jmml.me)
+
+## License
+
+The project is licensed under an AGPL license—see the LICENSE.md file for details.
