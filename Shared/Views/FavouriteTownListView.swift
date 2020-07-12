@@ -14,7 +14,7 @@ struct FavouriteTownListView: View {
     @Binding var isSheetOpened: Bool
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             List {
                 ForEach(townStore.favouriteTowns, id: \.id) { town in
                     NavigationLink(
@@ -39,7 +39,7 @@ struct FavouriteTownListView: View {
                     Image(systemName: "plus.circle")
                     Text("Añadir municipio")
                 }
-            }.buttonStyle(BorderlessButtonStyle())
+            }.buttonStyle(BorderlessButtonStyle()).padding(.leading)
             #endif
             Text("Datos proporcionados por la Agencia Estatal de Meteorología").padding()
         }

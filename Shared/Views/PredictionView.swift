@@ -12,6 +12,12 @@ import SwiftUI
 let weatherIcons: [AEMETSkyDescription: String] = [
     .despejado: "sun.max",
     .cubierto: "cloud",
+    .cubiertoLluviaEscasa: "cloud.drizzle",
+    .intervalosNubosos: "cloud.sun",
+    .intervalosNubososLluvia: "cloud.sun.rain",
+    .intervalosNubososLluviaEscasa: "cloud.sun.rain",
+    .intervalosNubososTormenta: "cloud.sun.bolt",
+    .pocoNuboso: "cloud.sun",
     .nuboso: "smoke",
     .niebla: "cloud.fog",
 ]
@@ -105,7 +111,7 @@ struct HourlyPredictionView: View {
                 HStack {
                     ForEach(prediction.days, id:\.date) { d in
                         VStack(alignment: .leading) {
-                            Text(getFormattedDateFromString(dateString: d.date, inFormat: isoDateFormatString, outFormat: "EEEE"))
+                            Text(getFormattedDateFromString(dateString: d.date, inFormat: isoDateFormatString, outFormat: "EEEE d"))
                                 .font(.subheadline)
                                 .padding(.bottom)
                             let datosHorarios = Array(zip(d.temperature, d.sky))
@@ -129,13 +135,15 @@ struct HourlyDataView: View {
     let sky: AEMETSkyDescription
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack {
             Text(period + "h")
                 .foregroundColor(Color.gray)
+            Spacer()
             Image(systemName: weatherIcons[sky, default: "tornado"]).font(.system(size: 24))
+            Spacer()
             Text(temp + "º")
                 .fontWeight(.bold)
-        }
+        }.frame(height: 80)
     }
 }
 
@@ -148,7 +156,7 @@ struct DailyPredictionListView: View {
         VStack(alignment: .leading) {
             Text("Predicción diaria")
                 .font(.headline)
-            VStack(alignment: .custom) {
+            VStack {
                 ForEach(predictions.prediction.day, id:\.date) { d in
                     //Text(predictions.prediction.day[0].sky[0].description)
                     DailyPredictionView(date: d.date, min: String(d.temperature.min), max: String(d.temperature.max), sky: d.sky[0].description)
@@ -164,28 +172,24 @@ struct DailyPredictionView: View {
     let sky: AEMETSkyDescription
     
     var body: some View {
-        HStack {
+        VStack(alignment: .leading) {
             Text(getFormattedDateFromString(dateString: date, inFormat: isoDateFormatString, outFormat: "EEEE d"))
-            Divider().frame(height: 20).alignmentGuide(.custom) { $0[.leading] }
-            Text(String(max) + "º")
-            Text(String(min) + "º")
-            Divider().frame(height: 20)
-            Image(systemName: weatherIcons[sky, default: "tornado"])
-            Text(sky.rawValue)
-        }
+                .font(.subheadline)
+            HStack(alignment: .top) {
+                Text(String(max) + "º")
+                    .fontWeight(.semibold)
+                Text(String(min) + "º")
+                Spacer()
+                Text(sky.rawValue)
+                Image(systemName: weatherIcons[sky, default: "tornado"])
+            }
+        }.frame(maxWidth: 300)
+        .padding(.top)
+        
     }
     
 }
 
-struct CustomAlignment: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat {
-        return context[.leading]
-    }
-}
-
-extension HorizontalAlignment {
-    static let custom: HorizontalAlignment = HorizontalAlignment(CustomAlignment.self)
-}
 
 // MARK: - Previews
 
@@ -199,7 +203,11 @@ struct MetadataView_Previews: PreviewProvider {
 struct HourlyDataView_Previews: PreviewProvider {
     
     static var previews: some View {
-        HourlyDataView(period: "12:00", temp: "23", sky: AEMETSkyDescription.cubierto)
+        HStack {
+            HourlyDataView(period: "12:00", temp: "23", sky: AEMETSkyDescription.cubierto)
+            HourlyDataView(period: "13:00", temp: "25", sky: AEMETSkyDescription.despejado)
+        }
+        
     }
 }
 
