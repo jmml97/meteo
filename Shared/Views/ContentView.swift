@@ -31,6 +31,11 @@ struct ContentView: View {
                 )
             #else
             FavouriteTownListView(isSheetOpened: $isSheetOpened)
+            VStack {
+                Spacer()
+                Text("Selecciona un municipio").frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                Spacer()
+            }.background(Color(NSColor.controlBackgroundColor))
             #endif
         }
     }
