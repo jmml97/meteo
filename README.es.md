@@ -12,6 +12,9 @@ Toda sugerencia es bienvenida, siempre que tenga en cuenta las consideraciones a
 
 Se necesita macOS Big Sur Beta, iOS 14 Beta y Xcode 12 Beta.
 
+Para descargar datos de la AEMET se necesita una API key.
+Puedes solicitar una [aquí](https://opendata.aemet.es/centrodedescargas/altaUsuario).
+
 ## Librerías usadas
 
 - [SQLite.swift](https://github.com/stephencelis/SQLite.swift) - Utilizada para almacenar los datos de los municipios

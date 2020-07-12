@@ -12,6 +12,9 @@ All suggestions are welcome, having in mind the considerations stated above.
 
 You need macOS Big Sur Beta, iOS 14 Beta and Xcode 12 Beta.
 
+In order to download data from AEMET you need an API key.
+You can request one [here](https://opendata.aemet.es/centrodedescargas/altaUsuario).
+
 ## Built with
 
 - [SQLite.swift](https://github.com/stephencelis/SQLite.swift) - Used for storing town data
