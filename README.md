@@ -25,4 +25,4 @@ You can request one [here](https://opendata.aemet.es/centrodedescargas/altaUsuar
 
 ## License
 
-The project is licensed under an AGPL license—see the LICENSE.md file for details.
+The project is licensed under an AGPL license—see the LICENSE.txt file for details.

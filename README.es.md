@@ -26,4 +26,4 @@ Puedes solicitar una [aquí](https://opendata.aemet.es/centrodedescargas/altaUsu
 ## Licencia
 
 Este proyecto está licenciado bajo una licencia AGPL.
-Consulta el archivo LICENSE.md para más detalles.
+Consulta el archivo LICENSE.txt para más detalles.
