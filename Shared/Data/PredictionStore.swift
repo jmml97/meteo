@@ -7,17 +7,17 @@
 
 import Foundation
 
+let AEMETBaseUrl = "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/"
+let keyFileName = "key"
+let keyFileExtension = "plist"
+
 /// Manages fetching predictions
-class PredictionManager: NSObject, ObservableObject {
-    
-    let keyFileName = "key"
-    let keyFileExtension = "plist"
+class PredictionStore: NSObject, ObservableObject {
     
     var townID: String? = nil
     var apiKey: String? = nil
     
-    @Published var hourlyPredictionsContainer: AEMETHourlyPredictionContainer? = nil
-    @Published var dailyPredictionsContainer: AEMETDailyPredictionContainer? = nil
+    @Published var model: PredictionModel? = nil
     
     override init() {
         super.init()
@@ -87,15 +87,22 @@ class PredictionManager: NSObject, ObservableObject {
         
     }
     
-    /// Loads hourly predictions into `hourlyPredictionsContainer`
-    func loadHourlyPredictions() {
+    // MARK: -
+    
+    func getPredictionModel() {
         
         guard let townID = self.townID, let apiKey = self.apiKey else {
             fatalError("API key or town ID are not set, can't fetch data without them.")
         }
         
-        let url = URL(string: "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/\(townID)/?api_key=\(apiKey)")!
+        var h: AEMETHourlyPredictionRoot?
+        var d: AEMETDailyPredictionRoot?
         
+        let dataDownloadGroup = DispatchGroup()
+        
+        var url = URL(string: AEMETBaseUrl + "horaria/\(townID)/?api_key=\(apiKey)")!
+        
+        dataDownloadGroup.enter()
         self.requestDataAndDecode(from: url, toContainer: GenericAEMETResponse.self) { response in
             guard let predictionURLString = response?.data else {
                 fatalError("Could not unwrap string of data URL.")
@@ -105,26 +112,19 @@ class PredictionManager: NSObject, ObservableObject {
                         fatalError("URL is not correct!")
             }
             
-            self.requestDataAndDecode(from: predictionURL, toContainer: [AEMETHourlyPredictionContainer].self) { predictions in
+            self.requestDataAndDecode(from: predictionURL, toContainer: [AEMETHourlyPredictionRoot].self) { predictions in
                 guard let predictions = predictions else {
                     fatalError("Could not load prediction.")
                 }
                 
-                self.hourlyPredictionsContainer = predictions[0]
+                h = predictions.first
+                dataDownloadGroup.leave()
             }
         }
         
-    }
-    
-    /// Loads daily predictions into `dailyPredictionsContainer`
-    func loadDailyPredictions() {
+        url = URL(string: AEMETBaseUrl + "diaria/\(townID)/?api_key=\(apiKey)")!
         
-        guard let townID = self.townID, let apiKey = self.apiKey else {
-            fatalError("API key or town ID are not set, can't fetch data without them.")
-        }
-        
-        let url = URL(string: "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/\(townID)/?api_key=\(apiKey)")!
-        
+        dataDownloadGroup.enter()
         self.requestDataAndDecode(from: url, toContainer: GenericAEMETResponse.self) { response in
             guard let predictionURLString = response?.data else {
                 fatalError("Could not unwrap string of data URL.")
@@ -134,55 +134,29 @@ class PredictionManager: NSObject, ObservableObject {
                         fatalError("URL is not correct!")
             }
             
-            self.requestDataAndDecode(from: predictionURL, toContainer: [AEMETDailyPredictionContainer].self) { predictions in
+            self.requestDataAndDecode(from: predictionURL, toContainer: [AEMETDailyPredictionRoot].self) { predictions in
                 guard let predictions = predictions else {
                     fatalError("Could not load prediction.")
                 }
                 
-                self.dailyPredictionsContainer = predictions[0]
+                d = predictions.first
+                dataDownloadGroup.leave()
             }
         }
         
-    }
-    
-    func getHourlyPredictions() -> AEMETHourlyPrediction {
-        
-        guard let hourlyPredictionsContainer = hourlyPredictionsContainer else {
-            fatalError("Hourly predictions are empty.")
-        }
-        
-        let hour = Calendar.current.component(.hour, from: Date())
-        
-        let todayTemperatures = hourlyPredictionsContainer.prediction.days[0].temperature.filter { Int($0.period!)! >= hour }
-        let todaySky = hourlyPredictionsContainer.prediction.days[0].sky.filter { Int($0.period!)! >= hour }
-        
-        var filteredHourlyPredictions = hourlyPredictionsContainer.prediction
-        filteredHourlyPredictions.days[0].temperature = todayTemperatures
-        filteredHourlyPredictions.days[0].sky = todaySky
-        
-        return filteredHourlyPredictions
-        
-    }
-    
-    func getCurrentData() -> (AEMETPeriodicData, AEMETSky) {
-        
-        guard let hourlyPredictionsContainer = hourlyPredictionsContainer else {
-            fatalError("Hourly predictions are empty.")
-        }
-        
-        let hour = Calendar.current.component(.hour, from: Date())
-        
-        let currentTemperature = hourlyPredictionsContainer.prediction.days[0].temperature.filter { Int($0.period!)! == hour }
-        let currentSky = hourlyPredictionsContainer.prediction.days[0].sky.filter { Int($0.period!)! == hour }
-        
-        return (currentTemperature[0], currentSky[0])
+        dataDownloadGroup.notify(queue: DispatchQueue.main, execute: {
+            if let h = h, let d = d {
+                print("created model")
+                self.model = PredictionModel.from(hourlyDTO: h, and: d)
+            }
+        })
         
     }
 }
 
 // AEMET uses self signed certificates and by default URLSession refuses to download data in that case.
 // We need to override this behaviour and allow unsecure connections.
-extension PredictionManager: URLSessionDelegate {
+extension PredictionStore: URLSessionDelegate {
     public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
        //Trust the certificate even if it is not valid.
        let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
