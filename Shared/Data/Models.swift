@@ -50,7 +50,7 @@ struct HourlyDataModel {
 }
 
 extension PredictionModel {
-    static func from(hourlyDTO: AEMETHourlyPredictionRoot, and dailyDTO: AEMETDailyPredictionRoot) -> PredictionModel {
+    static func from(hourlyDTO: AEMETHourlyPredictionRoot, dailyDTO: AEMETDailyPredictionRoot) -> PredictionModel {
         
         var days: [PredictionDayModel] = []
         

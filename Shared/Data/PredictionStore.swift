@@ -147,7 +147,7 @@ class PredictionStore: NSObject, ObservableObject {
         dataDownloadGroup.notify(queue: DispatchQueue.main, execute: {
             if let h = h, let d = d {
                 print("created model")
-                self.model = PredictionModel.from(hourlyDTO: h, and: d)
+                self.model = PredictionModel.from(hourlyDTO: h, dailyDTO: d)
             }
         })
         
