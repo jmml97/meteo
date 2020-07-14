@@ -289,6 +289,7 @@
 				3D63DB4224ADEE87008425E6 /* Sources */,
 				3D63DB4324ADEE87008425E6 /* Frameworks */,
 				3D63DB4424ADEE87008425E6 /* Resources */,
+				3DAA716E24BE2B5F00DED0EC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -425,6 +426,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3DAA716E24BE2B5F00DED0EC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3D63DB3A24ADEE87008425E6 /* Sources */ = {
@@ -666,6 +687,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.16;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = me.jmml.Meteo;
 				PRODUCT_NAME = Meteo;
 				SDKROOT = macosx;
@@ -688,6 +710,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.16;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = me.jmml.Meteo;
 				PRODUCT_NAME = Meteo;
 				SDKROOT = macosx;
