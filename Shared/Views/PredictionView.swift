@@ -11,6 +11,9 @@ import SwiftUI
 
 let weatherIcons: [AEMETSkyDescription: String] = [
     .despejado: "sun.max",
+    .nuboso: "cloud",
+    .nubosoLluvia: "cloud.rain",
+    .muyNuboso: "cloud",
     .cubierto: "cloud",
     .cubiertoLluviaEscasa: "cloud.drizzle",
     .intervalosNubosos: "cloud.sun",
@@ -18,7 +21,6 @@ let weatherIcons: [AEMETSkyDescription: String] = [
     .intervalosNubososLluviaEscasa: "cloud.sun.rain",
     .intervalosNubososTormenta: "cloud.sun.bolt",
     .pocoNuboso: "cloud.sun",
-    .nuboso: "smoke",
     .niebla: "cloud.fog",
 ]
 
@@ -51,6 +53,7 @@ struct PredictionViewContainer: View {
     var body: some View {
         
         if let model = manager.model {
+            #if os(macOS)
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     #if os(macOS)
@@ -67,10 +70,29 @@ struct PredictionViewContainer: View {
                     Spacer()
                 }.padding()
             }
-            .navigationTitle(model.townName)
+            .background(Color(NSColor.controlBackgroundColor))
             .frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
+            #else
+            ScrollView(.vertical) {
+                VStack(alignment: .leading) {
+                    MetadataView(province: model.province, predictionDate: model.dateCreated)
+                    CurrentDataView(skyDescription: model.days.first!.hourlyData.first!.sky, temperature: model.days.first!.hourlyData.first!.temperature)
+                    Spacer().frame(height: 50)
+                    HourlyPredictionView(model: model)
+                    Spacer().frame(height: 50)
+                    DailyPredictionListView(model: model)
+                    Spacer()
+                }.padding(20)
+            }
+            .navigationTitle(model.townName)
+            #endif
+           
         } else {
+            #if os(macOS)
+            loading.background(Color(NSColor.controlBackgroundColor))
+            #else
             loading
+            #endif
         }
         
     }
@@ -203,7 +225,7 @@ struct DailyPredictionView: View {
                 Text(String(min) + "º")
                 Spacer()
                 Text(sky.rawValue)
-                Image(systemName: weatherIcons[sky, default: "tornado"])
+                Image(systemName: weatherIcons[sky, default: ""])
             }
         }.frame(maxWidth: 400)
         .padding(.top)
