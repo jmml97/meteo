@@ -66,7 +66,7 @@ extension PredictionModel {
                 // Sky and temperature data are provided on a hourly basis, and they share indices
                 for (index_, sky) in hourlyDTO.prediction.days[index].sky.enumerated() {
                     
-                    // We strip the ours that have already passed
+                    // We strip the hours that have already passed
                     let currentHour = Calendar.current.component(.hour, from: Date())
                     let hour = Int(sky.period!)!
                     
