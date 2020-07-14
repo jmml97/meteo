@@ -65,20 +65,25 @@ struct PredictionViewContainer: View {
                     Spacer().frame(height: 50)
                     DailyPredictionListView(model: model)
                     Spacer()
-                }.padding([.top, .leading])
-            }.navigationTitle(model.townName)
-        } else {
-            
-            VStack {
-                Spacer()
-                ProgressView("Cargando").onAppear {
-                    manager.townID = townID
-                    manager.getPredictionModel()
-                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                Spacer()
+                }.padding()
             }
+            .navigationTitle(model.townName)
+            .frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
+        } else {
+            loading
         }
         
+    }
+    
+    var loading: some View {
+        VStack {
+            Spacer()
+            ProgressView("Cargando").onAppear {
+                manager.townID = townID
+                manager.getPredictionModel()
+            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            Spacer()
+        }
     }
 }
 
@@ -118,38 +123,28 @@ struct HourlyPredictionView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Predicción horaria")
-                .font(.headline)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(model.days.filter { d in
-                        !d.hourlyData.isEmpty
-                    }, id:\.date) { d in
-                        VStack(alignment: .leading) {
-                            Text(getStringDate(from: d.date, formattedAs: "EEEE d")).font(.subheadline).padding(.bottom)
-                            HStack(spacing: 20) {
-                                ForEach(d.hourlyData, id: \.hour) { h in
-                                    HourlyDataView(hour: h.hour, temperature: h.temperature, sky: h.sky)
-                                }
+            Text("Predicción horaria").font(.headline)
+            scroll
+        }
+    }
+    
+    var scroll: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(model.days.filter { d in
+                    !d.hourlyData.isEmpty
+                }, id:\.date) { d in
+                    VStack(alignment: .leading) {
+                        Text(getStringDate(from: d.date, formattedAs: "EEEE d"))
+                            .font(.subheadline)
+                            .padding(.bottom)
+                        HStack(spacing: 20) {
+                            ForEach(d.hourlyData, id: \.hour) { h in
+                                HourlyDataView(hour: h.hour, temperature: h.temperature, sky: h.sky)
                             }
                         }
-                        Divider().frame(height: 100)
                     }
-                    
-//                    ForEach(prediction.days, id:\.date) { d in
-//                        VStack(alignment: .leading) {
-//                            Text(getFormattedDateFromString(dateString: d.date, inFormat: isoDateFormatString, outFormat: "EEEE d"))
-//                                .font(.subheadline)
-//                                .padding(.bottom)
-//                            let datosHorarios = Array(zip(d.temperature, d.sky))
-//                            HStack(spacing: 20) {
-//                                ForEach(datosHorarios, id:\.0.period) { dato in
-//                                    HourlyDataView(period: dato.0.period!, temp: dato.0.value, sky: dato.1.description)
-//                                }
-//                            }
-//                        }
-//                        Divider().frame(height: 100)
-//                    }
+                    Divider().frame(height: 100)
                 }
             }
         }
@@ -185,7 +180,6 @@ struct DailyPredictionListView: View {
                 .font(.headline)
             VStack {
                 ForEach(model.days, id:\.date) { d in
-                    //Text(predictions.prediction.day[0].sky[0].description)
                     DailyPredictionView(date: d.date, min: d.min, max: d.max, sky: d.sky)
                 }
             }
