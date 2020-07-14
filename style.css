@@ -84,15 +84,6 @@ h3 + p {
   width: 100%;
 }
 
-.projects {
-  padding-top: 2em;
-}
-
-.project-list {
-  list-style: none;
-  padding-left: 0;
-}
-
 /* Footer */
 
 footer {
