@@ -309,17 +309,39 @@ struct DailyPredictionView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(getStringDate(from: date, formattedAs: "EEEE d"))
-                .font(.subheadline)
-            HStack(alignment: .top) {
-                Text(String(max) + "º")
-                    .fontWeight(.semibold)
-                Text(String(min) + "º")
-                Spacer()
-                Text(sky.rawValue)
-                Image(systemName: weatherIcons[sky, default: ""])
+                .font(.callout)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.secondary)
+            VStack(alignment: .leading) {
+                HStack {
+                    Image(systemName: weatherIcons[sky, default: ""])
+                        .font(.system(size: 28, weight: .semibold))
+                    Text(sky.rawValue)
+                        .fontWeight(.semibold)
+                }
+                .foregroundColor(weatherForegroundColors(sky))
+                .padding([.top, .leading, .trailing], 15)
+                .padding(.bottom, 5)
+                HStack(alignment: .top) {
+                    Text(String(max) + " ºC")
+                        .fontWeight(.semibold)
+                    Text("/")
+                    Text(String(min) + " ºC")
+                    Spacer()
+                    Image(systemName: "drop")
+                        .font(.system(size: 17, weight: .semibold))
+                    Text("XX%")
+                        .fontWeight(.semibold)
+                }
+                .foregroundColor(weatherForegroundColors(sky))
+                .padding([.leading, .bottom, .trailing], 15)
             }
-        }.frame(maxWidth: 400)
-        .padding(.top)
+            .frame(height: 100.0)
+            .background(weatherBackgroundColors(sky))
+            .cornerRadius(10)
+        }
+        .frame(width: 225)
+        .padding([.leading, .bottom])
         
     }
     
