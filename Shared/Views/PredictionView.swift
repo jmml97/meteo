@@ -173,11 +173,12 @@ struct MetadataView: View {
     let predictionDate: Date
     
     var body: some View {
-        HStack {
-            Text(province).font(Font.system(.body).smallCaps())
-            Divider().frame(height: 20)
-            Text("Elaboración: \(getStringDate(from: predictionDate, formattedAs: "MM/dd/yyyy HH:mm"))")
+        VStack(alignment: .leading) {
+            Text("Elaborado el \(getStringDate(from: predictionDate, formattedAs: "dd/MM/yyyy HH:mm"))")
+            Text("Datos proporcionados por la AEMET")
         }
+        .font(.footnote)
+        .foregroundColor(Color.secondary)
     }
 }
 
