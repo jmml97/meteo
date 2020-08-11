@@ -161,7 +161,8 @@ struct PredictionViewContainer: View {
             ProgressView("Cargando").onAppear {
                 manager.townID = townID
                 manager.getPredictionModel()
-            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             Spacer()
         }
     }
