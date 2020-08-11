@@ -63,6 +63,14 @@ extension PredictionModel {
                 
                 let hourlyDataDay = hourlyDTO.prediction.days[index]
                 
+                let diffComponents = Calendar.current.dateComponents([.hour], from: dateFrom(string: hourlyDataDay.date), to: Date())
+                let diffHours = diffComponents.hour!
+                
+                // If the prediction day has already passed, we do not include it in the prediction view
+                if (diffHours >= 24) {
+                    continue
+                }
+                
                 // Sky and temperature data are provided on a hourly basis, and they share indices
                 for (index_, sky) in hourlyDTO.prediction.days[index].sky.enumerated() {
                     
