@@ -92,7 +92,11 @@ class TownStore: ObservableObject {
         do {
             if (try db!.scalar(townsWithSameName.count) == 0) {
                 do {
-                    let insert = towns.insert(name <- town.name, id <- town.id, sortOrder <- favouriteTowns.count)
+                    let insert = towns.insert(
+                        name <- town.name,
+                        id <- town.id,
+                        sortOrder <- favouriteTowns.count
+                    )
                     try db!.run(insert)
                     reloadFavouriteTowns()
                     

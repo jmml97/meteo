@@ -45,7 +45,9 @@ class PredictionStore: NSObject, ObservableObject {
     /// Fetches JSON data from `url` and decodes to a `Decodable` container of type `Container.Type`.
     /// - Parameter url: url used to fetch JSON data for decoding.
     /// - Parameter toContainer: container type used to decode data
-    func requestDataAndDecode<Container>(from url: URL, toContainer: Container.Type, completion: @escaping (Container?) -> ()) where Container : Decodable {
+    func requestDataAndDecode<Container>(
+        from url: URL, toContainer: Container.Type, completion: @escaping (Container?) -> ()
+    ) where Container : Decodable {
         
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
@@ -157,7 +159,11 @@ class PredictionStore: NSObject, ObservableObject {
 // AEMET uses self signed certificates and by default URLSession refuses to download data in that case.
 // We need to override this behaviour and allow unsecure connections.
 extension PredictionStore: URLSessionDelegate {
-    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    public func urlSession(
+        _ session: URLSession,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
        //Trust the certificate even if it is not valid.
        let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
 

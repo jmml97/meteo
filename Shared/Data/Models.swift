@@ -63,7 +63,11 @@ extension PredictionModel {
                 
                 let hourlyDataDay = hourlyDTO.prediction.days[index]
                 
-                let diffComponents = Calendar.current.dateComponents([.hour], from: dateFrom(string: hourlyDataDay.date), to: Date())
+                let diffComponents = Calendar.current.dateComponents(
+                    [.hour],
+                    from: dateFrom(string: hourlyDataDay.date),
+                    to: Date()
+                )
                 let diffHours = diffComponents.hour!
                 
                 // If the prediction day has already passed, we do not include it in the prediction view
@@ -82,15 +86,32 @@ extension PredictionModel {
                         continue
                     }
                     
-                    dayHourlyData.append(HourlyDataModel(hour: Int(sky.period!)!, sky: sky.description, temperature: Int(hourlyDataDay.temperature[index_].value)!))
+                    dayHourlyData.append(
+                        HourlyDataModel(hour: Int(sky.period!)!,
+                                        sky: sky.description,
+                                        temperature: Int(hourlyDataDay.temperature[index_].value)!
+                        )
+                    )
                 }
                 
             }
             
-            days.append(PredictionDayModel(date: dateFrom(string: day.date), min: day.temperature.min, max: day.temperature.max, sky: day.sky.first!.description, hourlyData: dayHourlyData))
+            days.append(PredictionDayModel(
+                            date: dateFrom(string: day.date),
+                            min: day.temperature.min,
+                            max: day.temperature.max,
+                            sky: day.sky.first!.description,
+                            hourlyData: dayHourlyData
+                )
+            )
             
         }
         
-        return PredictionModel(townName: dailyDTO.name, province: dailyDTO.province, dateCreated: dateFrom(string: dailyDTO.created), days: days)
+        return PredictionModel(
+            townName: dailyDTO.name,
+            province: dailyDTO.province,
+            dateCreated: dateFrom(string: dailyDTO.created),
+            days: days
+        )
     }
 }
