@@ -56,19 +56,23 @@ struct PredictionViewContainer: View {
             #if os(macOS)
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    #if os(macOS)
                     Text(model.townName)
                         .font(.title)
                         .fontWeight(.bold)
-                    #endif
                     MetadataView(province: model.province, predictionDate: model.dateCreated)
-                    CurrentDataView(skyDescription: model.days.first!.hourlyData.first!.sky, temperature: model.days.first!.hourlyData.first!.temperature)
-                    Spacer().frame(height: 50)
+                    CurrentDataView(
+                        skyDescription: model.days.first!.hourlyData.first!.sky,
+                        temperature: model.days.first!.hourlyData.first!.temperature
+                    )
+                    Spacer()
+                        .frame(height: 50)
                     HourlyPredictionView(model: model)
-                    Spacer().frame(height: 50)
+                    Spacer()
+                        .frame(height: 50)
                     DailyPredictionListView(model: model)
                     Spacer()
-                }.padding()
+                }
+                .padding()
             }
             .background(Color(NSColor.controlBackgroundColor))
             .frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
@@ -89,7 +93,8 @@ struct PredictionViewContainer: View {
            
         } else {
             #if os(macOS)
-            loading.background(Color(NSColor.controlBackgroundColor))
+            loading
+                .background(Color(NSColor.controlBackgroundColor))
             #else
             loading
             #endif
