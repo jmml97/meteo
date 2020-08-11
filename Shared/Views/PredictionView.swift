@@ -222,7 +222,10 @@ struct HourlyPredictionView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Predicción horaria").font(.headline)
+            Text("Predicción horaria")
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(.horizontal)
             scroll
         }
     }
@@ -235,15 +238,16 @@ struct HourlyPredictionView: View {
                 }, id:\.date) { d in
                     VStack(alignment: .leading) {
                         Text(getStringDate(from: d.date, formattedAs: "EEEE d"))
-                            .font(.subheadline)
-                            .padding(.bottom)
-                        HStack(spacing: 20) {
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.secondary)
+                        HStack(spacing: 10) {
                             ForEach(d.hourlyData, id: \.hour) { h in
                                 HourlyDataView(hour: h.hour, temperature: h.temperature, sky: h.sky)
                             }
                         }
                     }
-                    Divider().frame(height: 100)
+                    .padding([.leading, .bottom])
                 }
             }
         }
@@ -259,12 +263,22 @@ struct HourlyDataView: View {
         VStack {
             Text(String(hour) + "h")
                 .foregroundColor(Color.gray)
-            Spacer()
-            Image(systemName: weatherIcons[sky, default: "tornado"]).font(.system(size: 24))
-            Spacer()
-            Text(String(temperature) + "º")
-                .fontWeight(.bold)
-        }.frame(height: 80)
+                .padding(2)
+            VStack {
+                Image(systemName: weatherIcons[sky, default: "tornado"])
+                    .font(.system(size: 28, weight: .semibold))
+                    .foregroundColor(weatherForegroundColors(sky))
+                    .padding(.top, 20)
+                Spacer()
+                Text(String(temperature) + " ºC")
+                    .fontWeight(.semibold)
+                    .foregroundColor(weatherForegroundColors(sky))
+                    .padding(.bottom, 10)
+            }
+            .frame(width: 75.0, height: 100.0)
+            .background(weatherBackgroundColors(sky))
+            .cornerRadius(10)
+        }
     }
 }
 
