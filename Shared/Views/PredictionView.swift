@@ -24,6 +24,50 @@ let weatherIcons: [AEMETSkyDescription: String] = [
     .niebla: "cloud.fog",
 ]
 
+let weatherBackgroundColors:(AEMETSkyDescription) -> (Color) = { sky in
+    switch sky {
+    case .despejado:
+        return Color("despejadoBackgroundColor")
+    case .nuboso,
+         .cubierto,
+         .muyNuboso:
+        return Color("nubosoBackgroundColor")
+    case .cubiertoLluvia,
+         .cubiertoLluviaEscasa,
+         .cubiertoTormentaLluviaEscasa,
+         .nubosoLluvia,
+         .nubosoLluviaEscasa,
+         .intervalosNubososLluvia,
+         .intervalosNubososLluviaEscasa,
+         .intervalosNubososTormentaLluviaEscasa:
+        return Color("lluviaBackgroundColor")
+    default:
+        return Color("despejadoBackgroundColor")
+    }
+}
+
+let weatherForegroundColors:(AEMETSkyDescription) -> (Color) = { sky in
+    switch sky {
+    case .despejado:
+        return Color("despejadoForegroundColor")
+    case .nuboso,
+         .cubierto,
+         .muyNuboso:
+        return Color("nubosoForegroundColor")
+    case .cubiertoLluvia,
+         .cubiertoLluviaEscasa,
+         .cubiertoTormentaLluviaEscasa,
+         .nubosoLluvia,
+         .nubosoLluviaEscasa,
+         .intervalosNubososLluvia,
+         .intervalosNubososLluviaEscasa,
+         .intervalosNubososTormentaLluviaEscasa:
+        return Color("lluviaForegroundColor")
+    default:
+        return Color("despejadoForegroundColor")
+    }
+}
+
 let isoDateFormatString = "yyyy-MM-dd'T'HH:mm:ss"
 
 
