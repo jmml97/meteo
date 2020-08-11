@@ -189,12 +189,30 @@ struct CurrentDataView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Text("Ahora")
+                .font(.callout)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.secondary)
             HStack {
-                Text(String(temperature) + "º").font(.system(size: 36))
-                Image(systemName: weatherIcons[skyDescription, default: "tornado"]).font(.system(size: 36))
+                Text(String(temperature) + " ºC")
+                    .font(.system(size: 36))
+                    .fontWeight(.semibold)
+                    .foregroundColor(weatherForegroundColors(skyDescription))
+                    .padding(15)
+                Spacer()
+                Text(skyDescription.rawValue)
+                    .foregroundColor(weatherForegroundColors(skyDescription))
+                    .padding(15)
+                Image(systemName: weatherIcons[skyDescription, default: "tornado"])
+                    .font(.system(size: 36, weight: .semibold))
+                    .foregroundColor(weatherForegroundColors(skyDescription))
+                    .padding(15)
+                
             }
-            Text(skyDescription.rawValue)
+            .background(weatherBackgroundColors(skyDescription))
+            .cornerRadius(10)
         }
+        .padding(.bottom)
     }
 }
 
