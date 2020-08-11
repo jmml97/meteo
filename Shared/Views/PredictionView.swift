@@ -290,10 +290,14 @@ struct DailyPredictionListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Predicción diaria")
-                .font(.headline)
-            VStack {
-                ForEach(model.days, id:\.date) { d in
-                    DailyPredictionView(date: d.date, min: d.min, max: d.max, sky: d.sky)
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(.horizontal)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(model.days, id:\.date) { d in
+                        DailyPredictionView(date: d.date, min: d.min, max: d.max, sky: d.sky)
+                    }
                 }
             }
         }
@@ -372,5 +376,14 @@ struct DailyPredictionView_Previews: PreviewProvider {
     
     static var previews: some View {
         DailyPredictionView(date: dateFrom(string: "2020-07-06T00:00:00"), min: 19, max: 34, sky: AEMETSkyDescription.cubierto)
+    }
+}
+
+struct CurrentDataView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack {
+            CurrentDataView(skyDescription: AEMETSkyDescription(rawValue: "Nuboso")!, temperature: 23)
+            CurrentDataView(skyDescription: AEMETSkyDescription(rawValue: "Despejado")!, temperature: 29)
+        }
     }
 }
