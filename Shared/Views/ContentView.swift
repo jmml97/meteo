@@ -33,9 +33,11 @@ struct ContentView: View {
             FavouriteTownListView(isSheetOpened: $isSheetOpened)
             VStack {
                 Spacer()
-                Text("Selecciona un municipio").frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                Text("Selecciona un municipio")
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 Spacer()
-            }.background(Color(NSColor.controlBackgroundColor))
+            }
+            .background(Color(NSColor.controlBackgroundColor))
             #endif
         }
     }
@@ -43,6 +45,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(TownStore())
+        ContentView()
+            .environmentObject(TownStore())
     }
 }

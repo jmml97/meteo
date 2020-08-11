@@ -25,11 +25,13 @@ struct FavouriteTownListView: View {
                 }
                 .onDelete(perform: townStore.removeFavouriteTown)
                 .onMove(perform: townStore.moveFavouriteTown)
-            }.sheet(isPresented: self.$isSheetOpened, onDismiss: {
+            }
+            .sheet(isPresented: self.$isSheetOpened, onDismiss: {
                 print("dismiss")
             }) {
                 TownListView(isSheetOpened: self.$isSheetOpened).environmentObject(self.townStore)
-            }.navigationTitle("Municipios")
+            }
+            .navigationTitle("Municipios")
             Spacer()
             #if os(macOS)
             Button(action: {
