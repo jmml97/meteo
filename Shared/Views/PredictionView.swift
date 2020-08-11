@@ -123,14 +123,23 @@ struct PredictionViewContainer: View {
             #else
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    MetadataView(province: model.province, predictionDate: model.dateCreated)
-                    CurrentDataView(skyDescription: model.days.first!.hourlyData.first!.sky, temperature: model.days.first!.hourlyData.first!.temperature)
-                    Spacer().frame(height: 50)
+                    Divider().padding(.horizontal)
+                    CurrentDataView(
+                        skyDescription: model.days.first!.hourlyData.first!.sky,
+                        temperature: model.days.first!.hourlyData.first!.temperature
+                    )
+                    .padding(.horizontal)
+                    Divider()
+                        .padding(.horizontal)
                     HourlyPredictionView(model: model)
-                    Spacer().frame(height: 50)
+                    Divider()
+                        .padding(.horizontal)
                     DailyPredictionListView(model: model)
-                    Spacer()
-                }.padding(20)
+                    Divider()
+                        .padding(.horizontal)
+                    MetadataView(province: model.province, predictionDate: model.dateCreated)
+                        .padding()
+                }
             }
             .navigationTitle(model.townName)
             #endif
